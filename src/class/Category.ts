@@ -1,0 +1,68 @@
+import { Collection } from "@discordjs/collection";
+import Client from "../client/Client";
+import Base from "./Base";
+import Resource from "./Resource";
+import User, { UserData } from "./User";
+
+export interface CategoryData {
+    id: string;
+    name: string;
+    isVisible: boolean;
+    createdAt: string;
+    updatedAt: string | null;
+    isDeleted: boolean;
+
+    creator: Partial<UserData> | null;
+}
+
+export default class Category extends Base {
+
+    public name: string;
+    public isVisible: boolean;
+    public createdAt: Date;
+    public updatedAt: Date | null;
+    public isDeleted: boolean;
+
+    public creator: User | null;
+    public resources: Collection<string, Resource>;
+
+    constructor(client: Client, data: CategoryData) {
+        super(client, data?.id, "/categories");
+
+        this.name = data.name;
+        this.isVisible = data.isVisible;
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+        this.isDeleted = data.isDeleted;
+
+        this.creator = this.getCreator(data?.creator?.id);
+        this.resources = this.client.resources.cache.filter(r => r.categories.has(this.id));
+    }
+
+    private getCreator(id?: string | null) {
+        return id ? this.client.users.cache.get(id) ?? null : null;
+    }
+
+    // private getRessourcesCollection(ressources: Partial<RessourceData>[]) {
+        
+    //     const collection = new Collection<string, Ressource>();
+    //     for(const r of ressources) {
+    //         if(r.id) {
+    //             const ressource = this.client.ressources.cache.get(r.id);
+    //             if(ressource) {
+    //                 collection.set(ressource.id, ressource);
+    //             }
+    //         }
+    //     }
+    //     return collection;
+    // }
+
+    public toJSON() {
+        return {
+            id: this.name,
+            name: this.name,
+            isVisible: this.isVisible,
+            isDeleted: this.isDeleted,
+        }
+    }
+}

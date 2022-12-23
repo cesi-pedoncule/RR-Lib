@@ -1,0 +1,29 @@
+{
+  "name": "@cesi-pedoncule/rr-lib",
+  "version": "0.1.0-alpha",
+  "description": "Library for interact with RR-API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "gendoc": "typedoc src/index.ts"
+  },
+  "keywords": [],
+  "author": "Hugo B",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "tslib": "^2.4.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@discordjs/collection": "^1.3.0",
+    "axios": "^1.1.3"
+  },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ]
+}
