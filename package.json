@@ -6,7 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "gendoc": "typedoc src/index.ts"
+    "docgen": "typedoc src/index.ts",
+    "u-typedoc": "npm uninstall typedoc",
+    "local-docgen": "npm i typedoc && npm run docgen && npm run u-typedoc"
   },
   "keywords": [],
   "author": "Hugo B",
@@ -23,6 +25,7 @@
   "files": [
     "dist/**/*",
     "package.json",
+    "package-lock.json",
     "README.md",
     "LICENSE"
   ]
