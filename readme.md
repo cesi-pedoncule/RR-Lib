@@ -4,8 +4,6 @@
   <a href="https://www.npmjs.com/package/rr-apilib"><img src="https://img.shields.io/npm/v/rr-apilib.svg?maxAge=3600" alt="npm version" /></a>
 </p>
 
-#### :warning: This repo is in alpha phase !
-
 Install: `npm install rr-apilib`
 
 ### Infos
