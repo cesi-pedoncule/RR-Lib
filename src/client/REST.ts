@@ -37,7 +37,7 @@ export default class REST {
         this.instance.defaults.headers["Authorization"] = `bearer ${token}`;
     }
 
-    private async sendRequest(url: string, config: RequestConfig) {
+    private async sendRequest(url: string, config: RequestConfig): Promise<any | null> {
         if(config.needAuth) {
             this.client.auth.checkAuth();
         }
@@ -49,6 +49,10 @@ export default class REST {
 
         if(response.status === config.waitedStatus) {
             return response.data;
+        }
+
+        if(response.status === 404) {
+            return null;
         }
 
         throw new Error(`Error ${response.status}, ${response.statusText}`);

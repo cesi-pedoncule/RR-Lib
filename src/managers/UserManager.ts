@@ -37,10 +37,13 @@ export default class UserManager {
 
     /** Fetch an existing user from the api */
     public async fetch(id: string){
-        const data: UserData = await this.client.rest.getRequest(`/users/${id}`);
-        const user = new User(this.client, data);
-        this.cache.set(user.id, user);
-        return user;
+        const data: UserData | null = await this.client.rest.getRequest(`/users/${id}`);
+        if(data) {
+            const user = new User(this.client, data);
+            this.cache.set(user.id, user);
+            return user;
+        }
+        return null;        
     }
 
     /** Create a new user */

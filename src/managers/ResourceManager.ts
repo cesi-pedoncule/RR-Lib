@@ -37,10 +37,13 @@ export default class ResourceManager {
 
     /** Fetch one resource with an id from the api */
     public async fetch(id: string){
-        const data: ResourceData = await this.client.rest.getRequest(`/resources/${id}`);
-        const ressource = new Resource(this.client, data);
-        this.cache.set(ressource.id, ressource);
-        return ressource;
+        const data: ResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
+        if(data) {
+            const ressource = new Resource(this.client, data);
+            this.cache.set(ressource.id, ressource);
+            return ressource;
+        }
+        return null;      
     }
 
     /** Create a new resource */

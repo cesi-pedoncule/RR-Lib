@@ -37,10 +37,13 @@ export default class CategoryManager {
 
     /** Fetch one category with an id from the api */
     public async fetch(id: string){
-        const data: CategoryData = await this.client.rest.getRequest(`/categories/${id}`);
-        const category = new Category(this.client, data);
-        this.cache.set(category.id, category);
-        return category;
+        const data: CategoryData | null = await this.client.rest.getRequest(`/categories/${id}`);
+        if(data) {
+            const category = new Category(this.client, data);
+            this.cache.set(category.id, category);
+            return category;
+        }
+        return null;
     }
 
     /** Create a new category */
