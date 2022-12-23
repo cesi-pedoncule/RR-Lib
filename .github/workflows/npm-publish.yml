@@ -16,8 +16,8 @@ jobs:
       - run: npm run build
 
   publish:
-    needs: build
     runs-on: ubuntu-latest
+    needs: build
     steps:
         with:
           registry-url: https://registry.npmjs.org/
@@ -26,8 +26,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   docs:
-    needs: [ build, publish ]
     runs-on: ubuntu-latest
+    needs: [ build, publish ]
     steps:
       
       - name: Install typedoc
