@@ -1,7 +1,6 @@
 # @cesi-pedoncule/RR-Lib
 
 <p>
-  <a href="https://github.com/cesi-pedoncule/RR-Lib/actions"><img src="https://github.com/cesi-pedoncule/RR-Lib/actions/workflows/codeql.yml/badge.svg" alt="CodeQL" /></a>
   <a href="https://www.npmjs.com/package/@cesi-pedoncule/RR-Lib"><img src="https://img.shields.io/npm/v/@cesi-pedoncule/RR-Lib.svg?maxAge=3600" alt="npm version" /></a>
 </p>
 
