@@ -1,5 +1,5 @@
 {
-  "name": "@cesi-pedoncule/rr-lib",
+  "name": "rr-apilib",
   "version": "0.1.0-alpha",
   "description": "Library for interact with RR-API",
   "main": "dist/index.js",

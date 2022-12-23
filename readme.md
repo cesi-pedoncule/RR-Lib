@@ -1,12 +1,12 @@
-# @cesi-pedoncule/RR-Lib
+# rr-apilib
 
 <p>
-  <a href="https://www.npmjs.com/package/@cesi-pedoncule/RR-Lib"><img src="https://img.shields.io/npm/v/@cesi-pedoncule/RR-Lib.svg?maxAge=3600" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/rr-apilib"><img src="https://img.shields.io/npm/v/rr-apilib.svg?maxAge=3600" alt="npm version" /></a>
 </p>
 
 #### :warning: This repo is in alpha phase !
 
-Install: `npm install @cesi-pedoncule/RR-Lib`
+Install: `npm install rr-apilib`
 
 ### Infos
 
@@ -17,7 +17,7 @@ Declare your Client, log in your user and browse the hidden data or make queries
 
 Login and upload a new comment on an existing Resource
 ```javascript
-const { Client, CommentBuilder } = require("@cesi-pedoncule/RR-Lib");
+const { Client, CommentBuilder } = require("rr-apilib");
 
 (async () => {
 
