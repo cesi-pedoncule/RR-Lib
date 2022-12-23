@@ -4,7 +4,7 @@ import Client from "../client/Client";
 import User, { UserData } from "../class/User";
 import UserBuilder from "../builders/UserBuilder";
 
-/** User manager which allows to manipulate 
+/** User manager which allow to manipulate 
  * the users in the api */
 export default class UserManager {
 
