@@ -3,6 +3,7 @@ export interface CategoryDataBuilder {
     isVisible: boolean;
 }
 
+/** Represents a categegory */
 export default class CategoryBuilder implements CategoryDataBuilder {
 
     public name: string;
@@ -23,6 +24,7 @@ export default class CategoryBuilder implements CategoryDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             name: this.name,

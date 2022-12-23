@@ -1,7 +1,7 @@
-import Client from "../client/Client";
+import User from "./User";
 import Base from "./Base";
 import Resource from "./Resource";
-import User from "./User";
+import Client from "../client/Client";
 
 export interface AttachmentData {
     id: string;
@@ -36,6 +36,7 @@ export default class Attachment extends Base {
         this.resource = resource;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,

@@ -5,6 +5,7 @@ export interface AttachmentDataBuilder {
     resource?: Ressource;
 }
 
+/** Represents a attachment in a ressource */
 export default class AttachmentBuilder implements AttachmentDataBuilder {
 
     public file: string;
@@ -26,6 +27,7 @@ export default class AttachmentBuilder implements AttachmentDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             file: this.file,

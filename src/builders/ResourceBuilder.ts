@@ -1,5 +1,5 @@
-import AttachmentBuilder from "./AttachmentBuilder";
 import Category from "../class/Category";
+import AttachmentBuilder from "./AttachmentBuilder";
 
 export interface ResourceDataBuilder {
     title: string;
@@ -10,6 +10,7 @@ export interface ResourceDataBuilder {
     categories: Category[];
 }
 
+/** Represents a resource */
 export default class ResourceBuilder implements ResourceDataBuilder {
 
     public title: string;
@@ -64,6 +65,7 @@ export default class ResourceBuilder implements ResourceDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             title: this.title,

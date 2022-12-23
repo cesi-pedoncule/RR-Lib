@@ -5,6 +5,7 @@ export interface UserDataBuilder {
     firstname: string
 }
 
+/** Represents a user */
 export default class UserBuilder implements UserDataBuilder {
 
     public email: string;
@@ -39,6 +40,7 @@ export default class UserBuilder implements UserDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON(): UserDataBuilder {
         return { ...this };
     }

@@ -1,8 +1,8 @@
 import { Collection } from "@discordjs/collection";
-import Client from "../client/Client";
 
 import Base from "./Base";
-import Resource, { ResourceData } from "./Resource";
+import Resource from "./Resource";
+import Client from "../client/Client";
 
 export interface UserData {
     id: string;
@@ -13,7 +13,6 @@ export interface UserData {
     createdAt: string;
     updatedAt: string;
     isBanned: boolean;
-    // ressources: Partial<RessourceData>[];
 }
 
 export default class User extends Base {
@@ -42,6 +41,7 @@ export default class User extends Base {
         this.resources = this.client.resources.cache.filter(r => r.user?.id === this.id);
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,

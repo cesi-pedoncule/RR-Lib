@@ -4,19 +4,23 @@ import axios, {
 } from 'axios';
 import Client from './Client';
 
-type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-interface RequestConfig {
+export interface RequestConfig {
     method: RequestMethod;
     waitedStatus: number;
     needAuth: boolean;
     data?: object;
 }
 
+/**
+ * REST client for the lib
+ * All requests are here
+ */
 export default class REST {
 
     private client: Client;
-    public instance: AxiosInstance;
+    private instance: AxiosInstance;
     
     constructor(client: Client, RESTConfig?: CreateAxiosDefaults<any>) {
         this.instance = axios.create({
@@ -28,6 +32,7 @@ export default class REST {
         this.client = client;
     }
 
+    /** Set token in Authorization header */
     public setToken(token: string) {
         this.instance.defaults.headers["Authorization"] = `bearer ${token}`;
     }

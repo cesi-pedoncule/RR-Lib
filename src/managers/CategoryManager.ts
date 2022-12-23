@@ -4,9 +4,13 @@ import Client from "../client/Client";
 import Category, { CategoryData } from "../class/Category";
 import CategoryBuilder from "../builders/CategoryBuilder";
 
+/** Category manager which allows to manipulate 
+ * the categories in the api */
 export default class CategoryManager {
 
     private client: Client;
+
+    /** Categories cache */
     public cache: Collection<string, Category>;
 
     constructor(client: Client) {
@@ -25,11 +29,13 @@ export default class CategoryManager {
         return collection;
     }
 
+    /** Fetch all existing users from the api */
     public async fetchAll() {
         const data: CategoryData[] = await this.client.rest.getRequest("/categories");
         return data.map(d => new Category(this.client, d));
     }
 
+    /** Fetch one category with an id from the api */
     public async fetch(id: string){
         const data: CategoryData = await this.client.rest.getRequest(`/categories/${id}`);
         const category = new Category(this.client, data);
@@ -37,6 +43,7 @@ export default class CategoryManager {
         return category;
     }
 
+    /** Create a new category */
     public async create(builder: CategoryBuilder) {
         const data = builder.toJSON();
         const categoryData: CategoryData = await this.client.rest.postRequest('/categories', data);
@@ -45,6 +52,7 @@ export default class CategoryManager {
         return category;
     }
 
+    /** Edit an existing category */
     public async edit(category: Category) {
         const data = category.toJSON();
         const categoryData: CategoryData = await this.client.rest.putRequest(`/categories/${data.id}`, data);

@@ -12,6 +12,7 @@ export default class Base {
         this.path = path;
     }
 
+    /** Return the iri of element */
     public getIri() {
         return `${this.path}/${this.id}`;
     }

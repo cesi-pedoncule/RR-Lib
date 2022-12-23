@@ -7,6 +7,7 @@ export interface ValidStateDataBuilder {
     moderator: User;
 }
 
+/** Represents a valid state */
 export default class ValidStateBuilder implements ValidStateDataBuilder {
     
     public state: State;
@@ -27,6 +28,7 @@ export default class ValidStateBuilder implements ValidStateDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             state: this.state,

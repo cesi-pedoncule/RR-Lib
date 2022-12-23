@@ -1,14 +1,15 @@
 import { Collection } from "@discordjs/collection";
 
-import Attachment, { AttachmentData } from "./Attachment";
-import Comment, { CommentData } from "./Comment";
-import Base from "./Base";
 
-import User, { UserData } from "./User";
-import Category, { CategoryData } from "./Category";
-import Client from "../client/Client";
-import AttachmentBuilder from "../builders/AttachmentBuilder";
 import CommentBuilder from "../builders/CommentBuilder";
+import AttachmentBuilder from "../builders/AttachmentBuilder";
+
+import Base from "./Base";
+import Client from "../client/Client";
+import User, { UserData } from "./User";
+import Comment, { CommentData } from "./Comment";
+import Category, { CategoryData } from "./Category";
+import Attachment, { AttachmentData } from "./Attachment";
 
 export interface ResourceData {
     id: string;
@@ -84,7 +85,7 @@ export default class Resource extends Base {
         return collection;
     }
 
-    // Attachments
+    /** Upload a new attachment for this resource */
     public async addNewAttachement(data: AttachmentBuilder) {
         const json = data.setRessource(this).toJSON();
         const attachData: AttachmentData = await this.client.rest.postRequest("/attachments/resource", json);
@@ -93,13 +94,14 @@ export default class Resource extends Base {
         return this;
     }
     
+    /** Delete a attachment for this resource */
     public async deleteAttachement(attachment: Attachment) {
         await this.client.rest.deleteRequest(`/attachments/${attachment.id}`);
         this.attachments.delete(attachment.id);
         return this;
     }
 
-    // Comments
+    /** Upload a new comment for this resource */
     public async addComment(data: CommentBuilder) {
         const json = data.setRessource(this).toJSON();
         const commentData: CommentData = await this.client.rest.postRequest("/comments", json);
@@ -108,13 +110,14 @@ export default class Resource extends Base {
         return this;
     }
     
+    /** Delete a comment for this resource */
     public async deleteComment(comment: Comment) {
         await this.client.rest.deleteRequest(`/comments/${comment.id}`);
         this.comments.delete(comment.id);
         return this;
     }
 
-    // Categories
+    /** Update the categories for this resource */
     public async setCategories(categories: Collection<string, Category>) {
         this.categories = categories;
         const json = this.toJSON();
@@ -122,6 +125,7 @@ export default class Resource extends Base {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,

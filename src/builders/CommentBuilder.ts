@@ -2,17 +2,18 @@ import Resource from "../class/Resource";
 
 export interface CommentDataBuilder {
     comment: string;
-    resource: Resource;
+    resource?: Resource;
 }
 
+/** Represents a comment in in a resource */
 export default class CommentBuilder implements CommentDataBuilder {
     
     public comment: string;
-    public resource: Resource;
+    public resource?: Resource;
 
     constructor(data?: Partial<CommentDataBuilder>) {
         this.comment = data?.comment ?? "";
-        this.resource = data?.resource!;
+        this.resource = data?.resource;
     }
 
     public setComment(text: string) {
@@ -25,10 +26,11 @@ export default class CommentBuilder implements CommentDataBuilder {
         return this;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             comment: this.comment,
-            ressource: this.resource.getIri(),
+            ressource: this.resource?.getIri(),
         };
     }
 }

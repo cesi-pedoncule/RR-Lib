@@ -1,7 +1,7 @@
 // Export Clients
-export { default as Client } from './client/Client';
-export { default as Auth } from "./client/Auth";
-export { default as REST } from "./client/REST";
+export { default as Client, ClientConfig } from './client/Client';
+export { default as Auth, LoginResponse } from "./client/Auth";
+export { default as REST, RequestConfig, RequestMethod } from "./client/REST";
 
 // Managers
 export { default as CategoryManager } from "./managers/CategoryManager";

@@ -1,7 +1,8 @@
 import { Collection } from "@discordjs/collection";
-import Client from "../client/Client";
+
 import Base from "./Base";
 import Resource from "./Resource";
+import Client from "../client/Client";
 import User, { UserData } from "./User";
 
 export interface CategoryData {
@@ -43,20 +44,7 @@ export default class Category extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
-    // private getRessourcesCollection(ressources: Partial<RessourceData>[]) {
-        
-    //     const collection = new Collection<string, Ressource>();
-    //     for(const r of ressources) {
-    //         if(r.id) {
-    //             const ressource = this.client.ressources.cache.get(r.id);
-    //             if(ressource) {
-    //                 collection.set(ressource.id, ressource);
-    //             }
-    //         }
-    //     }
-    //     return collection;
-    // }
-
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.name,

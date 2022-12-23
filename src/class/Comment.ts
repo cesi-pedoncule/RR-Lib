@@ -1,7 +1,7 @@
-import Client from "../client/Client";
 import Base from "./Base";
-import Resource from "./Resource";
 import User from "./User";
+import Resource from "./Resource";
+import Client from "../client/Client";
 
 export interface CommentData {
     id: string;
@@ -30,6 +30,7 @@ export default class Comment extends Base {
         this.isDeleted = data.isDeleted;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,

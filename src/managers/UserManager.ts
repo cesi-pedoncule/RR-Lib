@@ -4,9 +4,13 @@ import Client from "../client/Client";
 import User, { UserData } from "../class/User";
 import UserBuilder from "../builders/UserBuilder";
 
+/** User manager which allows to manipulate 
+ * the users in the api */
 export default class UserManager {
 
     private client: Client;
+
+    /** Users caches */
     public cache: Collection<string, User>;
 
     constructor(client: Client) {
@@ -25,11 +29,13 @@ export default class UserManager {
         return collection;
     }
 
+    /** Fetch all existing users from the api */
     public async fetchAll() {
         const data: UserData[] = await this.client.rest.getRequest("/users");
         return data.map(d => new User(this.client, d));
     }
 
+    /** Fetch an existing user from the api */
     public async fetch(id: string){
         const data: UserData = await this.client.rest.getRequest(`/users/${id}`);
         const user = new User(this.client, data);
@@ -37,6 +43,7 @@ export default class UserManager {
         return user;
     }
 
+    /** Create a new user */
     public async create(builder: UserBuilder) {
         const data = builder.toJSON();
         const ressourceData: UserData = await this.client.rest.postRequest('/users', data);
@@ -45,6 +52,7 @@ export default class UserManager {
         return ressource;
     }
 
+    /** Edit an existing user */
     public async edit(user: User) {
         const data = user.toJSON();
         const userData: UserData = await this.client.rest.putRequest(`/users/${user.id}`, data);

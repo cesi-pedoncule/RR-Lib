@@ -4,9 +4,13 @@ import Client from "../client/Client";
 import Resource, { ResourceData } from "../class/Resource";
 import ResourceBuilder from "../builders/ResourceBuilder";
 
+/** Resource manager which allows to manipulate 
+ * the resources in the api */
 export default class ResourceManager {
 
     private client: Client;
+
+    /** Resource cache */
     public cache: Collection<string, Resource>;
 
     constructor(client: Client) {
@@ -25,11 +29,13 @@ export default class ResourceManager {
         return collection;
     }
 
+    /** Fetch all existing resources from the api */
     public async fetchAll() {
         const data: ResourceData[] = await this.client.rest.getRequest("/resources");
         return data.map(d => new Resource(this.client, d));
     }
 
+    /** Fetch one resource with an id from the api */
     public async fetch(id: string){
         const data: ResourceData = await this.client.rest.getRequest(`/resources/${id}`);
         const ressource = new Resource(this.client, data);
@@ -37,6 +43,7 @@ export default class ResourceManager {
         return ressource;
     }
 
+    /** Create a new resource */
     public async create(builder: ResourceBuilder) {
         const data = builder.toJSON();
         const ressourceData: ResourceData = await this.client.rest.postRequest('/resources', data);
@@ -45,6 +52,7 @@ export default class ResourceManager {
         return ressource;
     }
 
+    /** Edit an existing resource */
     public async edit(ressource: Resource) {
         const data = ressource.toJSON();
         const ressourceData: ResourceData = await this.client.rest.putRequest(`/resources/${ressource.id}`, data);
