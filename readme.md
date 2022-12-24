@@ -1,7 +1,8 @@
 # rr-apilib
 
 <p>
-  <a href="https://www.npmjs.com/package/rr-apilib"><img src="https://img.shields.io/npm/v/rr-apilib.svg?maxAge=3600" alt="npm version" /></a>
+  <a href="https://github.com/cesi-pedoncule/RR-Lib/actions"><img src="https://github.com/cesi-pedoncule/RR-Lib/actions/workflows/codeql.yml/badge.svg" alt="CodeQL" /></a>
+  <a href="https://www.npmjs.com/package/rr-apilib"><img src="https://img.shields.io/npm/v/rr-apilib.svg?maxAge=3600" alt="NPM Version" /></a>
 </p>
 
 Install: `npm install rr-apilib`
