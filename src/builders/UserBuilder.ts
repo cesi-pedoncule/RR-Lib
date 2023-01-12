@@ -1,7 +1,7 @@
 export interface UserDataBuilder {
     email: string,
-    password: string,
     name: string,
+    password: string,
     firstname: string
 }
 
@@ -9,14 +9,14 @@ export interface UserDataBuilder {
 export default class UserBuilder implements UserDataBuilder {
 
     public email: string;
-    public password: string;
     public name: string;
+    public password: string;
     public firstname: string;
 
     constructor(data?: Partial<UserDataBuilder>) {
         this.email = data?.email ?? "";
-        this.password = data?.password ?? "";
         this.name = data?.name ?? "";
+        this.password = data?.password ?? "";
         this.firstname = data?.firstname ?? "";
     }
 

@@ -10,7 +10,6 @@ export default class AttachmentBuilder implements AttachmentDataBuilder {
 
     public file: string;
     public resource?: Ressource;
-    
 
     constructor(data?: Partial<AttachmentDataBuilder>) {
         this.file = data?.file ?? "";

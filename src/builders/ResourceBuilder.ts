@@ -3,30 +3,30 @@ import AttachmentBuilder from "./AttachmentBuilder";
 
 export interface ResourceDataBuilder {
     title: string;
-    description: string | null;
     isPublic: boolean;
+    description: string | null;
     
-    attachments: AttachmentBuilder[];
     categories: Category[];
+    attachments: AttachmentBuilder[];
 }
 
 /** Represents a resource */
 export default class ResourceBuilder implements ResourceDataBuilder {
 
     public title: string;
-    public description: string | null;
     public isPublic: boolean;
+    public description: string | null;
     
     public attachments: AttachmentBuilder[];
     public categories: Category[];
 
     constructor(data?: ResourceDataBuilder) {
         this.title = data?.title ?? "";
-        this.description = data?.description ?? null;
         this.isPublic = data?.isPublic ?? false;
+        this.description = data?.description ?? null;
         
-        this.attachments = data?.attachments ?? [];
         this.categories = data?.categories ?? [];
+        this.attachments = data?.attachments ?? [];
     }
 
     public setTitle(title: string) {

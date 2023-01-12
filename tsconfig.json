@@ -3,7 +3,7 @@
     "strict": true,
     "moduleResolution": "node",
     "module": "CommonJS",
-    "target": "ES2021",
+    "target": "ESNext",
     "declaration": true,
     "sourceMap": true,
     "pretty": true,
