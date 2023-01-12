@@ -47,7 +47,7 @@ export default class Category extends Base {
     /** Return data for api request */
     public toJSON() {
         return {
-            id: this.name,
+            id: this.id,
             name: this.name,
             isVisible: this.isVisible,
             isDeleted: this.isDeleted,
