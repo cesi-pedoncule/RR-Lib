@@ -11,7 +11,7 @@ export interface UserData {
     name: string;
     firstname: string;
     createdAt: string;
-    updatedAt: string;
+    updatedAt: string | null;
     isBanned: boolean;
 }
 
@@ -22,7 +22,7 @@ export default class User extends Base {
     public name: string;
     public firstname: string;
     public createdAt: Date;
-    public updatedAt: Date;
+    public updatedAt: Date | null;
     public isBanned: boolean;
 
     public resources: Collection<string, Resource>;
@@ -34,7 +34,7 @@ export default class User extends Base {
         this.roles = data.roles;
         this.name = data.name;
         this.firstname = data.firstname;
-        this.createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+        this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
         this.isBanned = data.isBanned || false;
 

@@ -5,7 +5,7 @@ export interface CommentDataBuilder {
     resource?: Resource;
 }
 
-/** Represents a comment in in a resource */
+/** Represents a comment in a resource */
 export default class CommentBuilder implements CommentDataBuilder {
     
     public comment: string;

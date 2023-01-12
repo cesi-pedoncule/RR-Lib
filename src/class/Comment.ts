@@ -7,6 +7,7 @@ export interface CommentData {
     id: string;
     comment: string;
     createdAt: string;
+    updatedAt: string | null;
     isDeleted: boolean;
 }
 
@@ -14,6 +15,7 @@ export default class Comment extends Base {
 
     public comment: string;
     public createdAt: Date;
+    public updatedAt: Date | null;
     public isDeleted: boolean;
 
     public resource: Resource;
@@ -27,6 +29,7 @@ export default class Comment extends Base {
 
         this.comment = data.comment,
         this.createdAt = new Date(data.createdAt),
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
         this.isDeleted = data.isDeleted;
     }
 

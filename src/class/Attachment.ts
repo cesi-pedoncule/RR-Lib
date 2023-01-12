@@ -5,9 +5,9 @@ import Client from "../client/Client";
 
 export interface AttachmentData {
     id: string;
+    type: string;
     fileUrl: string;
     fileName: string;
-    type: string;
     createdAt: string;
     isDeleted: boolean;
 }
@@ -15,8 +15,8 @@ export interface AttachmentData {
 export default class Attachment extends Base {
 
     public fileUrl: string;
-    public fileName: string;
     public type: string;
+    public fileName: string;
     public createdAt: Date;
     public isDeleted: boolean;
 
@@ -26,10 +26,10 @@ export default class Attachment extends Base {
     constructor(client: Client, resource: Resource, user: User | null, data: AttachmentData) {
         super(client, data.id, "/attachments");
 
-        this.fileUrl = data.fileUrl,
-        this.fileName = data.fileName,
+        this.fileUrl = data.fileUrl;
         this.type = data.type;
-        this.createdAt = new Date(data.createdAt),
+        this.fileName = data.fileName;
+        this.createdAt = new Date(data.createdAt);
         this.isDeleted = data.isDeleted;
 
         this.user = user;

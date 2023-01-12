@@ -87,7 +87,7 @@ export default class REST {
     public async deleteRequest(url: string) {
         return this.sendRequest(url, {
             method: "DELETE",
-            waitedStatus: 2004,
+            waitedStatus: 204,
             needAuth: true,
         });
     }

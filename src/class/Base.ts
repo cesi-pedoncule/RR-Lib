@@ -2,13 +2,13 @@ import Client from "../client/Client";
 
 export default class Base {
     
-    public client: Client;
     public id: string;
+    public client: Client;
     private path: string;
 
     constructor(client: Client, id: string, path: string) {
-        this.client = client;
         this.id = id;
+        this.client = client;
         this.path = path;
     }
 

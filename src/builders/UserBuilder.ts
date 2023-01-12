@@ -1,21 +1,21 @@
 export interface UserDataBuilder {
-    email: string,
-    name: string,
-    password: string,
-    firstname: string
+    name: string;
+    email: string;
+    password: string;
+    firstname: string;
 }
 
 /** Represents a user */
 export default class UserBuilder implements UserDataBuilder {
 
-    public email: string;
     public name: string;
+    public email: string;
     public password: string;
     public firstname: string;
 
     constructor(data?: Partial<UserDataBuilder>) {
-        this.email = data?.email ?? "";
         this.name = data?.name ?? "";
+        this.email = data?.email ?? "";
         this.password = data?.password ?? "";
         this.firstname = data?.firstname ?? "";
     }

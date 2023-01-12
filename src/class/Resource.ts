@@ -15,7 +15,7 @@ export interface ResourceData {
     title: string;
     description: string;
     createdAt: string;
-    updatedAt: string;
+    updatedAt: string | null;
     isPublic: boolean;
     isDeleted: boolean;
     user: Partial<UserData> | null;
@@ -42,10 +42,10 @@ export default class Resource extends Base {
     constructor(client: Client, data: ResourceData) {
         super(client, data.id, "/resources");
 
-        this.title = data.title,
-        this.description = data.description,
-        this.createdAt = new Date(data.createdAt),
-        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null,
+        this.title = data.title;
+        this.description = data.description;
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
         this.isDeleted = data.isDeleted;
         this.isPublic = data.isPublic;
 

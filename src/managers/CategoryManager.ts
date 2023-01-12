@@ -29,7 +29,7 @@ export default class CategoryManager {
         return collection;
     }
 
-    /** Fetch all existing users from the api */
+    /** Fetch all existing categories from the api */
     public async fetchAll() {
         const data: CategoryData[] = await this.client.rest.getRequest("/categories");
         return data.map(d => new Category(this.client, d));
