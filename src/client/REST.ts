@@ -4,7 +4,12 @@ import axios, {
 } from 'axios';
 import Client from './Client';
 
-export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+export enum RequestMethod {
+    Get = "GET",
+    Post = "POST",
+    Put = "PUT",
+    Delete = "Delete"
+};
 
 export interface RequestConfig {
     method: RequestMethod;
@@ -60,7 +65,7 @@ export default class REST {
 
     public async getRequest(url: string, needAuth = false) {
         return this.sendRequest(url, {
-            method: "GET",
+            method: RequestMethod.Get,
             waitedStatus: 200,
             needAuth,
         });
@@ -68,7 +73,7 @@ export default class REST {
 
     public async postRequest(url: string, data: object, needAuth = true, waitedStatus = 201) {
         return this.sendRequest(url, {
-            method: "POST",
+            method: RequestMethod.Post,
             waitedStatus,
             needAuth,
             data,
@@ -77,7 +82,7 @@ export default class REST {
 
     public async putRequest(url: string, data: object) {
         return this.sendRequest(url, {
-            method: "PUT",
+            method: RequestMethod.Put,
             waitedStatus: 200,
             needAuth: true,
             data,
@@ -86,7 +91,7 @@ export default class REST {
 
     public async deleteRequest(url: string) {
         return this.sendRequest(url, {
-            method: "DELETE",
+            method: RequestMethod.Delete,
             waitedStatus: 204,
             needAuth: true,
         });

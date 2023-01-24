@@ -1,6 +1,10 @@
 import User from "../class/User";
 
-export type State = "pending" | "validated" | "rejected";
+export enum State {
+    Pending = "pending",
+    Validated = "validated",
+    Rejected = "rejected"
+}
 
 export interface ValidStateDataBuilder {
     state: State;
@@ -14,7 +18,7 @@ export default class ValidStateBuilder implements ValidStateDataBuilder {
     public moderator: User;
 
     constructor(data?: Partial<ValidStateDataBuilder>) {
-        this.state = data?.state ?? "pending";
+        this.state = data?.state ?? State.Pending;
         this.moderator = data?.moderator!;
     }
 
