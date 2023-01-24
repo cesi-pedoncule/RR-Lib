@@ -22,4 +22,4 @@ export { default as Category, CategoryData } from "./class/Category";
 export { default as Comment, CommentData } from "./class/Comment";
 export { default as Resource, ResourceData } from "./class/Resource";
 export { default as User, UserData } from "./class/User";
-// export { default as ValidState } from "./class/ValidState";
+export { default as ValidationState, ValidationStateData } from "./class/ValidationState";
