@@ -16,32 +16,33 @@ Declare your Client, log in your user and browse the hidden data or make queries
 
 Login and upload a new comment on an existing Resource
 ```javascript
-const { Client, CommentBuilder } = require("rr-apilib");
+import { Client, CommentBuilder } from "rr-apilib";
 
 (async () => {
 
-    // Declare the client and login the user
-    const client = new Client();
-    await client.auth.login("me@mail.com", "password");
+  // Declare the client and login the user
+  const client = new Client();
+  await client.auth.login("me@mail.com", "password");
 
-    // Get an existing ressource in cache with id
-    const resource = client.resources.cache.get("uuid");
-    console.log(resource);
+  // Get an existing ressource in cache with id
+  const resource = client.resources.cache.get("uuid");
+  console.log(resource);
 
-    // Create new Comment
-    const newComment = new CommentBuilder()
-        .setComment(":D");
+  // Create new Comment
+  const newComment = new CommentBuilder()
+      .setComment(":D");
     
-    // POST the new comment in API
-    await ressource.addComment(newComment);
+  // POST the new comment in API
+  await ressource.addComment(newComment);
 
-    // Log ressource comments
-    console.log(ressource.comments);
+  // Log ressource comments
+  console.log(ressource.comments);
 })();
 ```
 
-## Documentation
-Documentation available soon...
+## Links
+[Github](https://github.com/cesi-pedoncule/RR-Lib)
+[Documentation](https://cesi-pedoncule.github.io/RR-Lib/)
 
 ## Contact
 - Discord [Horziox#0007](https://discord.com/users/340212760870649866)
