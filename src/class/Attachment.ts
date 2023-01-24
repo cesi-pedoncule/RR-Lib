@@ -9,7 +9,6 @@ export interface AttachmentData {
     fileUrl: string;
     fileName: string;
     createdAt: string;
-    isDeleted: boolean;
 }
 
 export default class Attachment extends Base {
@@ -18,7 +17,6 @@ export default class Attachment extends Base {
     public type: string;
     public fileName: string;
     public createdAt: Date;
-    public isDeleted: boolean;
 
     public user: User | null;
     public resource: Resource;
@@ -30,7 +28,6 @@ export default class Attachment extends Base {
         this.type = data.type;
         this.fileName = data.fileName;
         this.createdAt = new Date(data.createdAt);
-        this.isDeleted = data.isDeleted;
 
         this.user = user;
         this.resource = resource;
@@ -42,7 +39,6 @@ export default class Attachment extends Base {
             id: this.id,
             fileName: this.fileName,
             ressource: this.resource.getIri(),
-            isDeleted: this.isDeleted,
         }
     }
 }

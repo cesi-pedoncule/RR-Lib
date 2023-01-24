@@ -12,7 +12,6 @@ export interface UserData {
     firstname: string;
     createdAt: string;
     updatedAt: string | null;
-    isBanned: boolean;
 }
 
 export default class User extends Base {
@@ -23,7 +22,6 @@ export default class User extends Base {
     public firstname: string;
     public createdAt: Date;
     public updatedAt: Date | null;
-    public isBanned: boolean;
 
     public resources: Collection<string, Resource>;
 
@@ -36,7 +34,6 @@ export default class User extends Base {
         this.firstname = data.firstname;
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
-        this.isBanned = data.isBanned || false;
 
         this.resources = this.client.resources.cache.filter(r => r.user?.id === this.id);
     }

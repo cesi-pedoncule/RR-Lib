@@ -11,7 +11,6 @@ export interface CategoryData {
     isVisible: boolean;
     createdAt: string;
     updatedAt: string | null;
-    isDeleted: boolean;
 
     creator: Partial<UserData> | null;
 }
@@ -22,7 +21,6 @@ export default class Category extends Base {
     public isVisible: boolean;
     public createdAt: Date;
     public updatedAt: Date | null;
-    public isDeleted: boolean;
 
     public creator: User | null;
     public resources: Collection<string, Resource>;
@@ -34,7 +32,6 @@ export default class Category extends Base {
         this.isVisible = data.isVisible;
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
-        this.isDeleted = data.isDeleted;
 
         this.creator = this.getCreator(data?.creator?.id);
         this.resources = this.client.resources.cache.filter(r => r.categories.has(this.id));
@@ -50,7 +47,6 @@ export default class Category extends Base {
             id: this.id,
             name: this.name,
             isVisible: this.isVisible,
-            isDeleted: this.isDeleted,
         }
     }
 }

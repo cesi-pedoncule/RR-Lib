@@ -32,6 +32,7 @@ export default class ValidationState extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
+    /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,

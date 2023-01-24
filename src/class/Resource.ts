@@ -17,7 +17,6 @@ export interface ResourceData {
     createdAt: string;
     updatedAt: string | null;
     isPublic: boolean;
-    isDeleted: boolean;
     user: Partial<UserData> | null;
     
     attachments: AttachmentData[];
@@ -31,7 +30,6 @@ export default class Resource extends Base {
     public description: string | null;
     public createdAt: Date;
     public updatedAt: Date | null;
-    public isDeleted: boolean;
     public isPublic: boolean;
     
     public user: User | null;
@@ -46,7 +44,6 @@ export default class Resource extends Base {
         this.description = data.description;
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
-        this.isDeleted = data.isDeleted;
         this.isPublic = data.isPublic;
 
         this.user = this.getCreator(data.user?.id);
@@ -131,7 +128,6 @@ export default class Resource extends Base {
             title: this.title,
             description: this.description,
             isPublic: this.isPublic,
-            isDeleted: this.isDeleted,
             categories: Array.from(this.categories.keys()),
         }
     }

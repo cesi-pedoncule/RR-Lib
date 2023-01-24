@@ -8,7 +8,6 @@ export interface CommentData {
     comment: string;
     createdAt: string;
     updatedAt: string | null;
-    isDeleted: boolean;
 }
 
 export default class Comment extends Base {
@@ -16,7 +15,6 @@ export default class Comment extends Base {
     public comment: string;
     public createdAt: Date;
     public updatedAt: Date | null;
-    public isDeleted: boolean;
 
     public resource: Resource;
     public user: User | null;
@@ -30,7 +28,6 @@ export default class Comment extends Base {
         this.comment = data.comment,
         this.createdAt = new Date(data.createdAt),
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
-        this.isDeleted = data.isDeleted;
     }
 
     /** Return data for api request */
@@ -38,7 +35,6 @@ export default class Comment extends Base {
         return {
             id: this.id,
             comment: this.comment,
-            isDeleted: this.isDeleted,
         }
     }
 }
