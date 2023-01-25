@@ -18,7 +18,7 @@ export default class ResourceManager {
         this.cache = this.buildCache();
     }
 
-    private buildCache(): Collection<string, Resource> {
+    private buildCache() {
         const collection = new Collection<string, Resource>();
         this.fetchAll()
             .then(data => {
@@ -36,7 +36,7 @@ export default class ResourceManager {
     }
 
     /** Fetch one resource with an id from the api */
-    public async fetch(id: string){
+    public async fetch(id: string) {
         const data: ResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
         if(data) {
             const ressource = new Resource(this.client, data);

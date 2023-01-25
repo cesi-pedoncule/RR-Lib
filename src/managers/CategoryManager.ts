@@ -18,7 +18,7 @@ export default class CategoryManager {
         this.cache = this.buildCache();
     }
 
-    private buildCache(): Collection<string, Category> {
+    private buildCache() {
         const collection = new Collection<string, Category>();
         this.fetchAll()
             .then(data => {
@@ -36,7 +36,7 @@ export default class CategoryManager {
     }
 
     /** Fetch one category with an id from the api */
-    public async fetch(id: string){
+    public async fetch(id: string) {
         const data: CategoryData | null = await this.client.rest.getRequest(`/categories/${id}`);
         if(data) {
             const category = new Category(this.client, data);

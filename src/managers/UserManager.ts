@@ -18,7 +18,7 @@ export default class UserManager {
         this.cache = this.buildCache();
     }
 
-    private buildCache(): Collection<string, User> {
+    private buildCache() {
         const collection = new Collection<string, User>();
         if(this.client.auth.token) {
             this.fetchAll()
@@ -36,7 +36,7 @@ export default class UserManager {
     }
 
     /** Fetch an existing user from the api */
-    public async fetch(id: string){
+    public async fetch(id: string) {
         const data: UserData | null = await this.client.rest.getRequest(`/users/${id}`);
         if(data) {
             const user = new User(this.client, data);
