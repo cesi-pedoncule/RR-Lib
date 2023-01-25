@@ -34,7 +34,7 @@ export default class Auth {
         this.refresh_token = null;
     }
 
-    private getCurrentUser() {
+    private getCurrentUser(): User | null {
         this.checkAuth();
         this.client.rest.getRequest("/users/me")
         .then((data: UserData) => {
