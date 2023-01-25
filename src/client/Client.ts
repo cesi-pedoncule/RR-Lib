@@ -40,4 +40,9 @@ export default class Client {
         this.resources = new ResourceManager(this);
         this.users = new UserManager(this);
     }
+
+    /** Login user with username and password */
+    public async login(username: string, password: string) {
+        return this.auth.login(username, password);
+    }
 }
