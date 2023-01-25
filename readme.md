@@ -22,7 +22,7 @@ import { Client, CommentBuilder } from "rr-apilib";
 
   // Declare the client and login the user
   const client = new Client();
-  await client.auth.login("me@mail.com", "password");
+  await client.login("me@mail.com", "password");
 
   // Get an existing ressource in cache with id
   const resource = client.resources.cache.get("uuid");
