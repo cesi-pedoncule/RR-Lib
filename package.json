@@ -1,14 +1,13 @@
 {
   "name": "rr-apilib",
-  "version": "0.2.3-alpha",
+  "version": "0.2.2-alpha",
   "description": "Library for interact with RR-API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "docgen": "typedoc src/index.ts",
-    "u-typedoc": "npm uninstall typedoc",
-    "local-docgen": "npm i typedoc && npm run docgen && npm run u-typedoc"
+    "docgen:local": "npm i typedoc && npm run docgen && npm uninstall typedoc"
   },
   "keywords": [],
   "author": "Hugo B",
@@ -25,7 +24,6 @@
   "files": [
     "lib/**/*",
     "package.json",
-    "package-lock.json",
     "README.md",
     "LICENSE"
   ]
