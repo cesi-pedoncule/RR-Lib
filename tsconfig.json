@@ -2,12 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "Node",
-    "module": "ESNext",
-    "target": "ESNext",
+    "outDir": "lib",
+    "module": "ES6",
+    "target": "ES5",
+    "lib": ["DOM", "ES5", "ES6", "ESNext"],
     "declaration": true,
     "sourceMap": true,
     "pretty": true,
-    "outDir": "dist",
     "incremental": true,
     "noEmitHelpers": true,
     "importHelpers": true,
@@ -18,5 +19,6 @@
     "node_modules",
     ".github",
     "dist",
+    "lib",
   ]
 }
