@@ -1,19 +1,10 @@
 import { Collection } from "@discordjs/collection";
 
+import User from "./User"; 
 import Base from "./Base";
 import Resource from "./Resource";
 import Client from "../client/Client";
-import User, { UserData } from "./User";
-
-export interface CategoryData {
-    id: string;
-    name: string;
-    isVisible: boolean;
-    createdAt: string;
-    updatedAt: string | null;
-
-    creator: Partial<UserData> | null;
-}
+import { APICategoryData } from "../@types";
 
 export default class Category extends Base {
 
@@ -25,7 +16,7 @@ export default class Category extends Base {
     public creator: User | null;
     public resources: Collection<string, Resource>;
 
-    constructor(client: Client, data: CategoryData) {
+    constructor(client: Client, data: APICategoryData) {
         super(client, data?.id, "/categories");
 
         this.name = data.name;

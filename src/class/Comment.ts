@@ -2,32 +2,24 @@ import Base from "./Base";
 import User from "./User";
 import Resource from "./Resource";
 import Client from "../client/Client";
-
-export interface CommentData {
-    id: string;
-    comment: string;
-    createdAt: string;
-    updatedAt: string | null;
-}
+import { APICommentData } from "../@types";
 
 export default class Comment extends Base {
 
     public comment: string;
     public createdAt: Date;
-    public updatedAt: Date | null;
 
     public resource: Resource;
     public user: User | null;
 
-    constructor(client: Client, resource: Resource, user: User | null, data: CommentData) {
+    constructor(client: Client, resource: Resource, user: User | null, data: APICommentData) {
         super(client, data.id, "/comments");
 
         this.resource = resource;
         this.user = user;
 
-        this.comment = data.comment,
-        this.createdAt = new Date(data.createdAt),
-        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+        this.comment = data.comment;
+        this.createdAt = new Date(data.createdAt);
     }
 
     /** Return data for api request */

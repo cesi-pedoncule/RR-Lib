@@ -3,26 +3,19 @@ import { Collection } from "@discordjs/collection";
 import CommentBuilder from "../builders/CommentBuilder";
 import AttachmentBuilder from "../builders/AttachmentBuilder";
 
+import {
+    APIAttachmentData,
+    APICategoryData,
+    APICommentData,
+    APIResourceData
+} from "../@types";
+
 import Base from "./Base";
 import Client from "../client/Client";
-import User, { UserData } from "./User";
-import Comment, { CommentData } from "./Comment";
-import Category, { CategoryData } from "./Category";
-import Attachment, { AttachmentData } from "./Attachment";
-
-export interface ResourceData {
-    id: string;
-    title: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string | null;
-    isPublic: boolean;
-    user: Partial<UserData> | null;
-    
-    attachments: AttachmentData[];
-    categories: CategoryData[];
-    comments: CommentData[];
-}
+import User from "./User";
+import Comment from "./Comment";
+import Category from "./Category";
+import Attachment from "./Attachment";
 
 export default class Resource extends Base {
 
@@ -37,7 +30,7 @@ export default class Resource extends Base {
     public categories: Collection<string, Category>;
     public comments: Collection<string, Comment>;
 
-    constructor(client: Client, data: ResourceData) {
+    constructor(client: Client, data: APIResourceData) {
         super(client, data.id, "/resources");
 
         this.title = data.title;
@@ -57,15 +50,16 @@ export default class Resource extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
-    private buildAttachCollection(attachments: AttachmentData[]) {
+    private buildAttachCollection(attachments: Partial<APIAttachmentData>[]) {
         const collection = new Collection<string, Attachment>();
         for(const a of attachments) {
+            if(!a.id || !a.fileName || !a.fileUrl || !a.type || !a.createdAt) continue;
             collection.set(a.id, new Attachment(this.client, this, this.user, a));
         }
         return collection;
     }
 
-    private buildCategoriesCollection(categories: CategoryData[]) {
+    private buildCategoriesCollection(categories: APICategoryData[]) {
         const collection = new Collection<string, Category>();
         for(const a of categories) {
             collection.set(a.id, new Category(this.client, a));
@@ -73,7 +67,7 @@ export default class Resource extends Base {
         return collection;
     }
 
-    private buildCommentCollection(comments: CommentData[]) {
+    private buildCommentCollection(comments: APICommentData[]) {
         const collection = new Collection<string, Comment>();
         for(const c of comments) {
             collection.set(c.id, new Comment(this.client, this, this.user, c));
@@ -84,7 +78,7 @@ export default class Resource extends Base {
     /** Upload a new attachment for this resource */
     public async addNewAttachement(data: AttachmentBuilder) {
         const json = data.setRessource(this).toJSON();
-        const attachData: AttachmentData = await this.client.rest.postRequest("/attachments/resource", json);
+        const attachData: APIAttachmentData = await this.client.rest.postRequest("/attachments/resource", json);
         const attachment = new Attachment(this.client, this, this.client.auth.me, attachData);
         this.attachments.set(attachment.id, attachment);
         return this;
@@ -100,7 +94,7 @@ export default class Resource extends Base {
     /** Upload a new comment for this resource */
     public async addComment(data: CommentBuilder) {
         const json = data.setRessource(this).toJSON();
-        const commentData: CommentData = await this.client.rest.postRequest("/comments", json);
+        const commentData: APICommentData = await this.client.rest.postRequest("/comments", json);
         const comment = new Comment(this.client, this, this.client.auth.me!, commentData);
         this.comments.set(comment.id, comment);
         return this;

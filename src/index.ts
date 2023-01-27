@@ -17,9 +17,12 @@ export { default as UserBuilder, UserDataBuilder } from "./builders/UserBuilder"
 export { default as ValidStateBuilder, ValidStateDataBuilder, State } from "./builders/ValidStateBuilder";
 
 // Class
-export { default as Attachment, AttachmentData } from "./class/Attachment";
-export { default as Category, CategoryData } from "./class/Category";
-export { default as Comment, CommentData } from "./class/Comment";
-export { default as Resource, ResourceData } from "./class/Resource";
+export { default as Attachment } from "./class/Attachment";
+export { default as Category } from "./class/Category";
+export { default as Comment } from "./class/Comment";
+export { default as Resource } from "./class/Resource";
 export { default as User, UserData } from "./class/User";
 export { default as ValidationState, ValidationStateData } from "./class/ValidationState";
+
+// Types
+export * from "./@types";
