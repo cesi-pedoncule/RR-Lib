@@ -28,19 +28,15 @@ export default class Auth {
 
     constructor(client: Client) {
         this.client = client;
-        this.me = this.getCurrentUser();
+        this.me = null;
         
         this.token = null;
         this.refresh_token = null;
     }
 
-    private getCurrentUser(): User | null {
-        this.checkAuth();
-        this.client.rest.getRequest("/users/me")
-        .then((data: UserData) => {
-            return new User(this.client, data);
-        });
-        return null;
+    private async getCurrentUser() {
+        const data: UserData = await this.client.rest.getRequest("/users/me", true);
+        return new User(this.client, data);
     }
 
     /** Throw error if user is not connected (for protected routes) */
@@ -59,7 +55,7 @@ export default class Auth {
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
 
-        this.me = this.getCurrentUser();
+        this.me = await this.getCurrentUser();
         this.client.refresh();
         return data;
     }
@@ -77,7 +73,7 @@ export default class Auth {
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
 
-        this.me = this.getCurrentUser();
+        this.me = await this.getCurrentUser();
         this.client.refresh();
         return data;
     }
