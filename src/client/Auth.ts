@@ -58,6 +58,8 @@ export default class Auth {
         this.token = token;
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
+
+        this.me = this.getCurrentUser();
         return data;
     }
 
@@ -73,6 +75,8 @@ export default class Auth {
         this.token = token;
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
+
+        this.me = this.getCurrentUser();
         return data;
     }
 }
