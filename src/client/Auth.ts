@@ -41,7 +41,7 @@ export default class Auth {
 
     /** Throw error if user is not connected (for protected routes) */
     public checkAuth() {
-        if(this.me === null) {
+        if(this.token === null) {
             throw new Error("Not authenticated");
         }     
     }
