@@ -45,4 +45,11 @@ export default class Client {
     public async login(username: string, password: string) {
         return this.auth.login(username, password);
     }
+
+    /** Refresh managers */
+    public refresh() {
+        this.categories = new CategoryManager(this);
+        this.resources = new ResourceManager(this);
+        this.users = new UserManager(this);
+    }
 }

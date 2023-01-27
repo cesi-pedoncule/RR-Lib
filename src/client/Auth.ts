@@ -60,6 +60,7 @@ export default class Auth {
         this.client.rest.setToken(this.token);
 
         this.me = this.getCurrentUser();
+        this.client.refresh();
         return data;
     }
 
@@ -77,6 +78,7 @@ export default class Auth {
         this.client.rest.setToken(this.token);
 
         this.me = this.getCurrentUser();
+        this.client.refresh();
         return data;
     }
 }
