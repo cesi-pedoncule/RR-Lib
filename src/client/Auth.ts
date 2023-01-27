@@ -26,17 +26,32 @@ export default class Auth {
     /** Refresh token of user connected */
     public refresh_token: string | null;
 
+    private refreshInterval: NodeJS.Timer | null;
+
     constructor(client: Client) {
         this.client = client;
-        this.me = null;
         
+        this.me = null;
         this.token = null;
         this.refresh_token = null;
+
+        this.refreshInterval = null;
     }
 
     private async getCurrentUser() {
         const data: UserData = await this.client.rest.getRequest("/users/me", true);
         return new User(this.client, data);
+    }
+
+    private startRefreshInterval() {
+        this.refreshInterval = setInterval(() => this.refresh(), 36e5);
+    }
+
+    private clearRefreshInterval() {
+        if(this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+        }
+        this.refreshInterval = null;
     }
 
     /** Throw error if user is not connected (for protected routes) */
@@ -51,13 +66,26 @@ export default class Auth {
         const data: LoginResponse = await this.client.rest.postRequest("/login_check", { username, password }, false, 200);
         const { token, refresh_token } = data;
 
+        this.clearRefreshInterval();
+
         this.token = token;
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
 
+        this.startRefreshInterval();
+
         this.me = await this.getCurrentUser();
         this.client.refresh();
         return data;
+    }
+
+    /** Logout the user from the client */
+    public logout() {
+        this.me = null;
+        this.token = null;
+        this.refresh_token = null;
+        this.client.rest.removeToken();
+        this.clearRefreshInterval();
     }
 
     /**
@@ -69,9 +97,13 @@ export default class Auth {
         const data: LoginResponse = await this.client.rest.postRequest("/token/refresh", { refresh_token: this.refresh_token }, false, 200);
         const { token, refresh_token } = data;
 
+        this.clearRefreshInterval();
+
         this.token = token;
         this.refresh_token = refresh_token;
         this.client.rest.setToken(this.token);
+
+        this.startRefreshInterval();
 
         this.me = await this.getCurrentUser();
         this.client.refresh();

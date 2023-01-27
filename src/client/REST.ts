@@ -42,6 +42,11 @@ export default class REST {
         this.instance.defaults.headers["Authorization"] = `bearer ${token}`;
     }
 
+    /** Remove token in Authorization header */
+    public removeToken() {
+        delete this.instance.defaults.headers["Authorization"];
+    }
+
     private async sendRequest(url: string, config: RequestConfig): Promise<any | null> {
         if(config.needAuth) {
             this.client.auth.checkAuth();
