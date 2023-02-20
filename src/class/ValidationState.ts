@@ -1,14 +1,15 @@
-import User, { UserData } from "./User";
+import User from "./User";
 import { State } from "../builders/ValidStateBuilder";
 import Base from "./Base";
 import Client from "../client/Client";
+import { APIUserData } from "../@types";
 
 export interface ValidationStateData {
     id: string;
     state: State;
     updatedAt: string | null;
 
-    moderator: Partial<UserData> | null;
+    moderator: Partial<APIUserData> | null;
 }
 
 export default class ValidationState extends Base {

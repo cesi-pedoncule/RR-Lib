@@ -1,10 +1,8 @@
-import { Collection } from "@discordjs/collection";
-
 import User from "./User"; 
 import Base from "./Base";
-import Resource from "./Resource";
 import Client from "../client/Client";
 import { APICategoryData } from "../@types";
+import CategoryRessourceManager from "../managers/CategoryResourceManager";
 
 export default class Category extends Base {
 
@@ -14,7 +12,7 @@ export default class Category extends Base {
     public updatedAt: Date | null;
 
     public creator: User | null;
-    public resources: Collection<string, Resource>;
+    public resources: CategoryRessourceManager;
 
     constructor(client: Client, data: APICategoryData) {
         super(client, data?.id, "/categories");
@@ -25,7 +23,7 @@ export default class Category extends Base {
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
         this.creator = this.getCreator(data?.creator?.id);
-        this.resources = this.client.resources.cache.filter(r => r.categories.has(this.id));
+        this.resources = new CategoryRessourceManager(this);
     }
 
     private getCreator(id?: string | null) {

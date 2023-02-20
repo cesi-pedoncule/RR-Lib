@@ -1,4 +1,5 @@
-import User, { UserData } from "../class/User";
+import { APIUserData } from "../@types";
+import User from "../class/User";
 import Client from "./Client";
 
 export interface LoginResponse {
@@ -39,7 +40,7 @@ export default class Auth {
     }
 
     private async getCurrentUser() {
-        const data: UserData = await this.client.rest.getRequest("/users/me", true);
+        const data: APIUserData = await this.client.rest.getRequest("/users/me", true);
         return new User(this.client, data);
     }
 

@@ -2,7 +2,7 @@ import User from "./User";
 import Base from "./Base";
 import Resource from "./Resource";
 import Client from "../client/Client";
-import { APIAttachmentData } from "../@types";
+import { APIResourceAttachmentData } from "../@types";
 
 export default class Attachment extends Base {
 
@@ -14,7 +14,7 @@ export default class Attachment extends Base {
     public user: User | null;
     public resource: Resource;
 
-    constructor(client: Client, resource: Resource, user: User | null, data: Omit<APIAttachmentData, "user" | "ressource">) {
+    constructor(client: Client, resource: Resource, user: User | null, data: APIResourceAttachmentData) {
         super(client, data.id, "/attachments");
 
         this.fileUrl = data.fileUrl;

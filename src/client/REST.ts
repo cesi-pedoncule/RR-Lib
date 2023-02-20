@@ -29,7 +29,7 @@ export default class REST {
     
     constructor(client: Client, RESTConfig?: CreateAxiosDefaults<any>) {
         this.instance = axios.create({
-            baseURL: "https://rr-api.aymeric-cucherousset.fr",
+            baseURL: "https://api.ressourcesrelationnelles.social",
 
             // Apply given config
             ...RESTConfig

@@ -1,18 +1,7 @@
-import { Collection } from "@discordjs/collection";
-
 import Base from "./Base";
-import Resource from "./Resource";
 import Client from "../client/Client";
-
-export interface UserData {
-    id: string;
-    email: string;
-    roles: string[];
-    name: string;
-    firstname: string;
-    createdAt: string;
-    updatedAt: string | null;
-}
+import { APIUserData } from "../@types";
+import UserResourceManager from "../managers/UserResourceManager";
 
 export default class User extends Base {
 
@@ -23,9 +12,9 @@ export default class User extends Base {
     public createdAt: Date;
     public updatedAt: Date | null;
 
-    public resources: Collection<string, Resource>;
+    public resources: UserResourceManager;
 
-    constructor(client: Client, data: UserData) {
+    constructor(client: Client, data: APIUserData) {
         super(client, data.id, "/users");
 
         this.email = data.email;
@@ -35,7 +24,7 @@ export default class User extends Base {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
 
-        this.resources = this.client.resources.cache.filter(r => r.user?.id === this.id);
+        this.resources = new UserResourceManager(this);
     }
 
     /** Return data for api request */

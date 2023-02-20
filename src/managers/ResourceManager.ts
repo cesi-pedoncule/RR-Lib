@@ -2,19 +2,19 @@ import { Collection } from "@discordjs/collection";
 
 import Client from "../client/Client";
 import ResourceBuilder from "../builders/ResourceBuilder";
-import Resource, { ResourceData } from "../class/Resource";
+import Resource from "../class/Resource";
+import { APIResourceData } from "../@types";
+import BaseManager from "./BaseManager";
 
 /** Resource manager which allow to manipulate 
  * the resources in the api */
-export default class ResourceManager {
-
-    private client: Client;
+export default class ResourceManager extends BaseManager {
 
     /** Resource cache */
     public cache: Collection<string, Resource>;
 
     constructor(client: Client) {
-        this.client = client;
+        super(client);
         this.cache = this.buildCache();
     }
 
@@ -31,13 +31,13 @@ export default class ResourceManager {
 
     /** Fetch all existing resources from the api */
     public async fetchAll() {
-        const data: ResourceData[] = await this.client.rest.getRequest("/resources");
+        const data: APIResourceData[] = await this.client.rest.getRequest("/resources");
         return data.map(d => new Resource(this.client, d));
     }
 
     /** Fetch one resource with an id from the api */
     public async fetch(id: string) {
-        const data: ResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
+        const data: APIResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
         if(data) {
             const ressource = new Resource(this.client, data);
             this.cache.set(ressource.id, ressource);
@@ -49,7 +49,7 @@ export default class ResourceManager {
     /** Create a new resource */
     public async create(builder: ResourceBuilder) {
         const data = builder.toJSON();
-        const ressourceData: ResourceData = await this.client.rest.postRequest('/resources', data);
+        const ressourceData: APIResourceData = await this.client.rest.postRequest('/resources', data);
         const ressource = new Resource(this.client, ressourceData);
         this.cache.set(ressource.id, ressource);
         return ressource;
@@ -58,7 +58,7 @@ export default class ResourceManager {
     /** Edit an existing resource */
     public async edit(ressource: Resource) {
         const data = ressource.toJSON();
-        const ressourceData: ResourceData = await this.client.rest.putRequest(`/resources/${ressource.id}`, data);
+        const ressourceData: APIResourceData = await this.client.rest.putRequest(`/resources/${ressource.id}`, data);
         const editRessource = new Resource(this.client, ressourceData);
         this.cache.set(editRessource.id, editRessource);
         return editRessource;
