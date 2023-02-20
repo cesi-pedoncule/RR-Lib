@@ -14,8 +14,9 @@ export interface APIAttachmentData {
     createdAt: string;
     
     user: string | null;
-    ressource: Partial<APIResourceData>;
+    resource: Partial<APIResourceData>;
 }
+export type APIResourceAttachmentData = Omit<APIAttachmentData, "resource" | "user">;
 
 export interface APICategoryData {
     id: string;
@@ -45,7 +46,7 @@ export interface APIResourceData {
     isPublic: boolean;
     
     user: Partial<APIUserData> | null;
-    attachments: Partial<APIAttachmentData>[];
+    attachments: APIResourceAttachmentData[];
     categories: Partial<APICategoryData>[];
     comments: Partial<APICommentData>[];
 }
