@@ -33,7 +33,7 @@ import { Client, CommentBuilder } from "rr-apilib";
       .setComment(":D");
     
   // POST the new comment in API
-  await ressource.addComment(newComment);
+  await ressource.comments.add(newComment);
 
   // Log ressource comments
   console.log(ressource.comments);
