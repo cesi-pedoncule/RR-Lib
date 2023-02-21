@@ -36,7 +36,7 @@ export default class Resource extends Base {
 
         this.attachments = new ResourceAttachmentManager(this, data.attachments);
         this.categories = new ResourceCategoryManager(this);
-        this.comments = new ResourceCommentManager(this);
+        this.comments = new ResourceCommentManager(this, data.comments);
         this.likes = new ResourceLikeManager(this, data.userLikes);
     }
 

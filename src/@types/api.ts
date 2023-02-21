@@ -25,7 +25,7 @@ export interface APICategoryData {
     createdAt: string;
     updatedAt: string | null;
 
-    creator: Partial<APIUserData> | null;
+    creator: APIBaseUserData | null;
 }
 
 export interface APICommentData {
@@ -33,9 +33,10 @@ export interface APICommentData {
     comment: string;
     createdAt: string;
 
-    user: Partial<APIUserData> | null;
+    user: APIBaseUserData | null;
     resource: Partial<APIResourceData>;
 }
+export type APIResourceCommentData = Omit<APICommentData, "resource">;
 
 export interface APIResourceData {
     id: string;
@@ -48,7 +49,7 @@ export interface APIResourceData {
     user: Partial<APIUserData> | null;
     attachments: APIResourceAttachmentData[];
     categories: Partial<APICategoryData>[];
-    comments: Partial<APICommentData>[];
+    comments: APIResourceCommentData[];
     validationStates: APIResourceValidationStateData[];
     userLikes: APIResourceUserLikeData[];
 }

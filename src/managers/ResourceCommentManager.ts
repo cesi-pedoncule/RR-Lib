@@ -1,6 +1,9 @@
 import { Collection } from "@discordjs/collection";
-import { APICommentData } from "../@types";
 import CommentBuilder from "../builders/CommentBuilder";
+import {
+    APICommentData,
+    APIResourceCommentData
+} from "../@types";
 
 import Comment from "../class/Comment";
 import Resource from "../class/Resource";
@@ -11,17 +14,17 @@ export default class ResourceCommentManager extends BaseManager {
     private resource: Resource;
     public cache: Collection<string, Comment>;
 
-    constructor(resource: Resource) {
+    constructor(resource: Resource, data: APIResourceCommentData[]) {
         super(resource.client);
         this.resource = resource;
-        this.cache = new Collection();
+        this.cache = new Collection(data.map(c => [c.id, new Comment(this.client, this.resource, c)]));
     }
 
     /** Upload a new comment for this resource */
     public async add(data: CommentBuilder) {
         const json = data.setRessource(this.resource).toJSON();
         const commentData: APICommentData = await this.client.rest.postRequest("/comments", json);
-        const comment = new Comment(this.client, this.resource, this.client.auth.me!, commentData);
+        const comment = new Comment(this.client, this.resource, commentData);
         this.cache.set(comment.id, comment);
         return this.resource;
     }

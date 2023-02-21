@@ -2,7 +2,7 @@ import Base from "./Base";
 import User from "./User";
 import Resource from "./Resource";
 import Client from "../client/Client";
-import { APICommentData } from "../@types";
+import { APIResourceCommentData } from "../@types";
 
 export default class Comment extends Base {
 
@@ -12,11 +12,11 @@ export default class Comment extends Base {
     public resource: Resource;
     public user: User | null;
 
-    constructor(client: Client, resource: Resource, user: User | null, data: APICommentData) {
+    constructor(client: Client, resource: Resource, data: APIResourceCommentData) {
         super(client, data.id, "/comments");
 
         this.resource = resource;
-        this.user = user;
+        this.user = data.user ? this.client.users.cache.get(data.user?.id) ?? null : null;
 
         this.comment = data.comment;
         this.createdAt = new Date(data.createdAt);
