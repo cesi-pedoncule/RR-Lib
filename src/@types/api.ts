@@ -34,7 +34,7 @@ export interface APICommentData {
     createdAt: string;
 
     user: Partial<APIUserData> | null;
-    ressource: Partial<APIResourceData>;
+    resource: Partial<APIResourceData>;
 }
 
 export interface APIResourceData {
@@ -49,6 +49,7 @@ export interface APIResourceData {
     attachments: APIResourceAttachmentData[];
     categories: Partial<APICategoryData>[];
     comments: Partial<APICommentData>[];
+    validationStates: APIResourceValidationStateData[];
 }
 
 export interface APIUserFollowData {
@@ -61,7 +62,7 @@ export interface APIUserFollowData {
 export interface APIUserLikeData {
     id: string;
     user: string;
-    ressource: string;
+    resource: string;
     likeAt: string;
 }
 
@@ -75,22 +76,30 @@ export interface APIUserData {
     updatedAt: string | null;
     isBanned: boolean;
     
-    ressources: Partial<APIResourceData>[];
+    resources: Partial<APIResourceData>[];
     resourceLikes: Partial<APIUserLikeData>[];
     userFollows: Partial<APIUserFollowData>[];
     userFollowers: Partial<APIUserFollowData>[];
 }
+export type APIBaseUserData = Omit<APIUserData, "resources" | "resourceLikes" | "userFollows" | "userFollowers">;
 
-export interface ValidationStateData {
+export interface APIValidationStateData {
     id: string;
     state: APIValidationState;
     updatedAt: string;
-
-    moderator: Partial<APIUserData>;
+    resource: Partial<APIResourceData>;
+    moderator: APIBaseUserData;
+}
+export interface APIResourceValidationStateData {
+    id: string;
+    state: {
+        id: number;
+        label: string;
+    };
+    updatedAt: string;
 }
 
 // API error
-
 export interface APIErrorData {}
 
 export type APIResponseData =
@@ -101,6 +110,6 @@ export type APIResponseData =
     | APIUserFollowData
     | APIUserLikeData
     | APIUserData
-    | ValidationStateData;
+    | APIValidationStateData;
 
 export type APIResponse = APIResponseData | APIErrorData;

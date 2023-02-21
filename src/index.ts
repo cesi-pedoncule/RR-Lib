@@ -23,7 +23,7 @@ export { default as CategoryBuilder, CategoryDataBuilder } from "./builders/Cate
 export { default as CommentBuilder, CommentDataBuilder } from "./builders/CommentBuilder";
 export { default as ResourceBuilder, ResourceDataBuilder } from "./builders/ResourceBuilder";
 export { default as UserBuilder, UserDataBuilder } from "./builders/UserBuilder";
-export { default as ValidStateBuilder, ValidStateDataBuilder, State } from "./builders/ValidStateBuilder";
+export { default as ValidationStateBuilder, ValidationStateDataBuilder } from "./builders/ValidationStateBuilder";
 
 // Class
 export { default as Attachment } from "./class/Attachment";
@@ -31,7 +31,7 @@ export { default as Category } from "./class/Category";
 export { default as Comment } from "./class/Comment";
 export { default as Resource } from "./class/Resource";
 export { default as User } from "./class/User";
-export { default as ValidationState, ValidationStateData } from "./class/ValidationState";
+export { default as ValidationState } from "./class/ValidationState";
 
 // Types
 export * from "./@types";

@@ -6,6 +6,7 @@ import REST from "./REST";
 import UserManager from "../managers/UserManager";
 import CategoryManager from "../managers/CategoryManager";
 import ResourceManager from "../managers/ResourceManager";
+import ValidationStateManager from "../managers/ValidationStateManager";
 
 /** Client configuration object */
 export interface ClientConfig extends CreateAxiosDefaults {
@@ -31,12 +32,16 @@ export default class Client {
     /** Ressources manager for this client */
     public resources: ResourceManager;
 
+    /** Validations manager for this client */
+    public validations: ValidationStateManager;
+
     constructor(config?: Partial<ClientConfig>) {
         
         this.rest = new REST(this, config);
         this.auth = new Auth(this);
 
         this.categories = new CategoryManager(this);
+        this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
         this.users = new UserManager(this);
     }
@@ -49,6 +54,7 @@ export default class Client {
     /** Refresh managers */
     public refresh() {
         this.categories = new CategoryManager(this);
+        this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
         this.users = new UserManager(this);
     }
