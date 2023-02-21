@@ -2,7 +2,7 @@ import User from "./User";
 import Base from "./Base";
 import Client from "../client/Client";
 import { APICategoryData } from "../@types";
-import CategoryRessourceManager from "../managers/CategoryResourceManager";
+import CategoryResourceManager from "../managers/CategoryResourceManager";
 
 export default class Category extends Base {
 
@@ -12,7 +12,7 @@ export default class Category extends Base {
     public updatedAt: Date | null;
 
     public creator: User | null;
-    public resources: CategoryRessourceManager;
+    public resources: CategoryResourceManager;
 
     constructor(client: Client, data: APICategoryData) {
         super(client, data?.id, "/categories");
@@ -23,7 +23,7 @@ export default class Category extends Base {
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
         this.creator = this.getCreator(data?.creator?.id);
-        this.resources = new CategoryRessourceManager(this);
+        this.resources = new CategoryResourceManager(this);
     }
 
     private getCreator(id?: string | null) {

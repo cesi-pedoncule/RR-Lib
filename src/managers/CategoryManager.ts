@@ -1,10 +1,10 @@
 import { Collection } from "@discordjs/collection";
 
 import Client from "../client/Client";
-import CategoryBuilder from "../builders/CategoryBuilder";
-import Category from "../class/Category";
 import BaseManager from "./BaseManager";
+import Category from "../class/Category";
 import { APICategoryData } from "../@types";
+import CategoryBuilder from "../builders/CategoryBuilder";
 
 /** Category manager which allow to manipulate 
  * the categories in the api */

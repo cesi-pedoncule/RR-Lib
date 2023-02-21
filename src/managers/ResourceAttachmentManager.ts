@@ -1,10 +1,14 @@
 import { Collection } from "@discordjs/collection";
 
-import Attachment from "../class/Attachment";
-import Resource from "../class/Resource";
 import BaseManager from "./BaseManager";
-import { APIAttachmentData, APIResourceAttachmentData } from "../@types";
+import Resource from "../class/Resource";
+import Attachment from "../class/Attachment";
 import AttachmentBuilder from "../builders/AttachmentBuilder";
+
+import {
+    APIAttachmentData,
+    APIResourceAttachmentData
+} from "../@types";
 
 export default class ResourceAttachmentManager extends BaseManager {
 

@@ -1,7 +1,8 @@
 import { Collection } from "@discordjs/collection";
-import Resource from "../class/Resource";
+
 import User from "../class/User";
 import BaseManager from "./BaseManager";
+import Resource from "../class/Resource";
 
 export default class UserResourceManager extends BaseManager {
 

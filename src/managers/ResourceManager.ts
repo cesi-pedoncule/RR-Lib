@@ -1,10 +1,10 @@
 import { Collection } from "@discordjs/collection";
 
 import Client from "../client/Client";
-import ResourceBuilder from "../builders/ResourceBuilder";
+import BaseManager from "./BaseManager";
 import Resource from "../class/Resource";
 import { APIResourceData } from "../@types";
-import BaseManager from "./BaseManager";
+import ResourceBuilder from "../builders/ResourceBuilder";
 
 /** Resource manager which allow to manipulate 
  * the resources in the api */

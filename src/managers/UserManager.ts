@@ -1,10 +1,10 @@
 import { Collection } from "@discordjs/collection";
 
-import Client from "../client/Client";
 import User from "../class/User";
-import UserBuilder from "../builders/UserBuilder";
+import Client from "../client/Client";
 import { APIUserData } from "../@types";
 import BaseManager from "./BaseManager";
+import UserBuilder from "../builders/UserBuilder";
 
 /** User manager which allow to manipulate 
  * the users in the api */

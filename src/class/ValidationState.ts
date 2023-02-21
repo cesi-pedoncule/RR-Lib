@@ -1,8 +1,8 @@
 import User from "./User";
-import { State } from "../builders/ValidStateBuilder";
 import Base from "./Base";
 import Client from "../client/Client";
 import { APIUserData } from "../@types";
+import { State } from "../builders/ValidStateBuilder";
 
 export interface ValidationStateData {
     id: string;
