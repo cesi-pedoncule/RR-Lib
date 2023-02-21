@@ -50,6 +50,7 @@ export interface APIResourceData {
     categories: Partial<APICategoryData>[];
     comments: Partial<APICommentData>[];
     validationStates: APIResourceValidationStateData[];
+    userLikes: APIResourceUserLikeData[];
 }
 
 export interface APIUserFollowData {
@@ -61,9 +62,19 @@ export interface APIUserFollowData {
 
 export interface APIUserLikeData {
     id: string;
-    user: string;
-    resource: string;
+    user: {
+        id: string
+    };
+    resource: {
+        id: string;
+    };
     likeAt: string;
+}
+export interface APIResourceUserLikeData {
+    id: string;
+    user: {
+        id: string;
+    }
 }
 
 export interface APIUserData {

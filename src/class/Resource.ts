@@ -7,6 +7,7 @@ import Client from "../client/Client";
 import ResourceAttachmentManager from "../managers/ResourceAttachmentManager";
 import ResourceCategoryManager from "../managers/ResourceCategoryManager";
 import ResourceCommentManager from "../managers/ResourceCommentManager";
+import ResourceLikeManager from "../managers/ResourceLikeManager";
 
 export default class Resource extends Base {
 
@@ -20,6 +21,7 @@ export default class Resource extends Base {
     public attachments: ResourceAttachmentManager;
     public categories: ResourceCategoryManager;
     public comments: ResourceCommentManager;
+    public likes: ResourceLikeManager;
 
     constructor(client: Client, data: APIResourceData) {
         super(client, data.id, "/resources");
@@ -35,6 +37,7 @@ export default class Resource extends Base {
         this.attachments = new ResourceAttachmentManager(this, data.attachments);
         this.categories = new ResourceCategoryManager(this);
         this.comments = new ResourceCommentManager(this);
+        this.likes = new ResourceLikeManager(this, data.userLikes);
     }
 
     private getCreator(id?: string | null) {
