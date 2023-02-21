@@ -8,6 +8,7 @@ import ResourceAttachmentManager from "../managers/ResourceAttachmentManager";
 import ResourceCategoryManager from "../managers/ResourceCategoryManager";
 import ResourceCommentManager from "../managers/ResourceCommentManager";
 import ResourceLikeManager from "../managers/ResourceLikeManager";
+import ResourceValidationStateManager from "../managers/ResourceValidationStateManager";
 
 export default class Resource extends Base {
 
@@ -22,6 +23,7 @@ export default class Resource extends Base {
     public categories: ResourceCategoryManager;
     public comments: ResourceCommentManager;
     public likes: ResourceLikeManager;
+    public validations: ResourceValidationStateManager;
 
     constructor(client: Client, data: APIResourceData) {
         super(client, data.id, "/resources");
@@ -38,6 +40,7 @@ export default class Resource extends Base {
         this.categories = new ResourceCategoryManager(this);
         this.comments = new ResourceCommentManager(this, data.comments);
         this.likes = new ResourceLikeManager(this, data.userLikes);
+        this.validations = new ResourceValidationStateManager(this);
     }
 
     private getCreator(id?: string | null) {

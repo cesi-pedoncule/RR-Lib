@@ -1,12 +1,15 @@
 import Base from "./Base";
 import Client from "../client/Client";
-import { APIUserData } from "../@types";
 import UserResourceManager from "../managers/UserResourceManager";
+import {
+    APIUserData,
+    APIUserRole
+} from "../@types";
 
 export default class User extends Base {
 
     public email: string;
-    public roles: string[];
+    public roles: APIUserRole[];
     public name: string;
     public firstname: string;
     public createdAt: Date;

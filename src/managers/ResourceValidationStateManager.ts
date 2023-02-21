@@ -4,7 +4,7 @@ import { Collection } from "@discordjs/collection";
 import ValidationState from "../class/ValidationState";
 import ValidationStateBuilder from "../builders/ValidationStateBuilder";
 
-export default class ValidationStateResourceManager extends BaseManager {
+export default class ResourceValidationStateManager extends BaseManager {
 
     private resource: Resource;
     public cache: Collection<string, ValidationState>;

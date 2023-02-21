@@ -5,6 +5,11 @@ export enum APIValidationState {
     Rejected = "rejected"
 }
 
+export enum APIUserRole {
+    User = "ROLE_USER",
+    Admin = "ROLE_ADMIN"
+}
+
 // API data interfaces
 export interface APIAttachmentData {
     id: string;
@@ -81,7 +86,7 @@ export interface APIResourceUserLikeData {
 export interface APIUserData {
     id: string;
     email: string;
-    roles: string[];
+    roles: APIUserRole[];
     name: string;
     firstname: string;
     createdAt: string;
