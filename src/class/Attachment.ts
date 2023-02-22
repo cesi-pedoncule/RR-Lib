@@ -4,6 +4,10 @@ import Resource from "./Resource";
 import Client from "../client/Client";
 import { APIResourceAttachmentData } from "../@types";
 
+/**
+ * Represents an attachment
+ * WARNING: You can't upload a real file yet
+ */
 export default class Attachment extends Base {
 
     public fileUrl: string;
@@ -11,7 +15,10 @@ export default class Attachment extends Base {
     public fileName: string;
     public createdAt: Date;
 
+    /** User who have create this attachment */
     public user: User | null;
+    
+    /** Resource of this attachment */
     public resource: Resource;
 
     constructor(client: Client, resource: Resource, user: User | null, data: APIResourceAttachmentData) {

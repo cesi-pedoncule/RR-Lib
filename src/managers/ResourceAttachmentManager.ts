@@ -12,7 +12,10 @@ import {
 
 export default class ResourceAttachmentManager extends BaseManager {
 
-    private resource: Resource;
+    /** The resource this manager belongs to */
+    public resource: Resource;
+
+    /** Attachments cache from the resource */
     public cache: Collection<string, Attachment>;
 
     constructor(resource: Resource, data: APIResourceAttachmentData[]) {
@@ -30,7 +33,7 @@ export default class ResourceAttachmentManager extends BaseManager {
     }
 
     /** Upload a new attachment for this resource */
-    public async add(data: AttachmentBuilder) {
+    public async create(data: AttachmentBuilder) {
         const json = data.setRessource(this.resource).toJSON();
         const attachData: APIAttachmentData = await this.client.rest.postRequest("/attachments/resource", json);
         const attachment = new Attachment(this.client, this.resource, this.client.auth.me, attachData);

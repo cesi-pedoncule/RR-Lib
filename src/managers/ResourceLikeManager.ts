@@ -11,7 +11,10 @@ import {
 
 export default class ResourceLikeManager extends BaseManager {
 
-    private resource: Resource;
+    /** The resource this manager belongs to */
+    public resource: Resource;
+
+    /** Likes cache from the resource */
     public cache: Collection<string, UserLike>;
     
     constructor(resource: Resource, data: APIResourceUserLikeData[]) {
@@ -21,6 +24,7 @@ export default class ResourceLikeManager extends BaseManager {
         this.cache = new Collection(data.map(l => [l.id, new UserLike(this.client, this.resource, l)]));
     }
 
+    /** Add a like to this Resource */
     public async add(like: UserLikeBuilder) {
         const json = like.setResource(this.resource).toJSON();
         const likeData: APIUserLikeData = await this.client.rest.postRequest("/user_likes", json, true);
@@ -29,6 +33,7 @@ export default class ResourceLikeManager extends BaseManager {
         return this.resource;
     }
 
+    /** Delete an existing like to this Resource */
     public async remove(like: UserLike) {
         await this.client.rest.deleteRequest(`/user_likes/${like.id}`);
         this.cache.delete(like.id);

@@ -68,6 +68,7 @@ export default class REST {
         throw new Error(`Error ${response.status}, ${response.statusText}`);
     }
 
+    /** Send a get request to the API */
     public async getRequest(url: string, needAuth = false) {
         return this.sendRequest(url, {
             method: RequestMethod.Get,
@@ -76,6 +77,7 @@ export default class REST {
         });
     }
 
+    /** Send a post request to the API */
     public async postRequest(url: string, data: object, needAuth = true, waitedStatus = 201) {
         return this.sendRequest(url, {
             method: RequestMethod.Post,
@@ -85,6 +87,7 @@ export default class REST {
         });
     }
 
+    /** Send a put request to the API */
     public async putRequest(url: string, data: object) {
         return this.sendRequest(url, {
             method: RequestMethod.Put,
@@ -94,6 +97,7 @@ export default class REST {
         });
     }
 
+    /** Send a delete request to the API */
     public async deleteRequest(url: string) {
         return this.sendRequest(url, {
             method: RequestMethod.Delete,

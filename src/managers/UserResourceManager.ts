@@ -6,7 +6,10 @@ import Resource from "../class/Resource";
 
 export default class UserResourceManager extends BaseManager {
 
-    private user: User;
+    /** The user this manager belongs to */
+    public user: User;
+
+    /** Resources cache for this user */
     public cache: Collection<string, Resource>;
     
     constructor(user: User) {

@@ -6,15 +6,28 @@ import {
     APIUserRole
 } from "../@types";
 
+/** Represents an user */
 export default class User extends Base {
 
+    /** User's email */
     public email: string;
+
+    /** User's roles */
     public roles: APIUserRole[];
+
+    /** User's name */
     public name: string;
+
+    /** User's firstname */
     public firstname: string;
+
+    /** Creation date of the account */
     public createdAt: Date;
+
+    /** Last updated datel */
     public updatedAt: Date | null;
 
+    /** Resources manager for this user */
     public resources: UserResourceManager;
 
     constructor(client: Client, data: APIUserData) {
