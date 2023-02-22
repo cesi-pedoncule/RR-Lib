@@ -11,7 +11,10 @@ import BaseManager from "./BaseManager";
 
 export default class ResourceCommentManager extends BaseManager {
 
-    private resource: Resource;
+    /** The resource this manager belongs to */
+    public resource: Resource;
+
+    /** Comments cache from the resource */
     public cache: Collection<string, Comment>;
 
     constructor(resource: Resource, data: APIResourceCommentData[]) {
@@ -20,8 +23,8 @@ export default class ResourceCommentManager extends BaseManager {
         this.cache = new Collection(data.map(c => [c.id, new Comment(this.client, this.resource, c)]));
     }
 
-    /** Upload a new comment for this resource */
-    public async add(data: CommentBuilder) {
+    /** Create a new comment for this resource */
+    public async create(data: CommentBuilder) {
         const json = data.setRessource(this.resource).toJSON();
         const commentData: APICommentData = await this.client.rest.postRequest("/comments", json);
         const comment = new Comment(this.client, this.resource, commentData);

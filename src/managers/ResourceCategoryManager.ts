@@ -6,7 +6,10 @@ import BaseManager from "./BaseManager";
 
 export default class ResourceCategoryManager extends BaseManager {
 
-    private resource: Resource;
+    /** The resource this manager belongs to */
+    public resource: Resource;
+
+    /** Categories cache from the resource */
     public cache: Collection<string, Category>;
 
     constructor(resource: Resource) {

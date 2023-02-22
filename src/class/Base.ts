@@ -2,9 +2,14 @@ import Client from "../client/Client";
 
 export default class Base {
     
+    /* Unique identifier */
     public id: string;
+    
+    /* The client that instantiated this */
     public client: Client;
-    private path: string;
+    
+    /* API path */
+    public path: string;
 
     constructor(client: Client, id: string, path: string) {
         this.id = id;

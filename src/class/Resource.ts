@@ -11,19 +11,40 @@ import ResourceCommentManager from "../managers/ResourceCommentManager";
 import ResourceLikeManager from "../managers/ResourceLikeManager";
 import ResourceValidationStateManager from "../managers/ResourceValidationStateManager";
 
+/** Represents an resource */
 export default class Resource extends Base {
 
+    /** The resource's title */
     public title: string;
+    
+    /** The resource's description */
     public description: string | null;
+    
+    /** Creation date */
     public createdAt: Date;
+
+    /** Last updated date */
     public updatedAt: Date | null;
+    
+    /** Privacy of this resource */
     public isPublic: boolean;
     
+    /**Resource's creator */
     public user: User | null;
+    
+    /** Resource's attachments manager */
     public attachments: ResourceAttachmentManager;
+
+    /** Resource's categories manager */
     public categories: ResourceCategoryManager;
+    
+    /** Resource's comments manager */
     public comments: ResourceCommentManager;
+
+    /** Resource's likes manager */
     public likes: ResourceLikeManager;
+
+    /** Resource's validation state manager */
     public validations: ResourceValidationStateManager;
 
     constructor(client: Client, data: APIResourceData) {
@@ -58,10 +79,12 @@ export default class Resource extends Base {
         return null;
     }
 
+    /* Check if the current user like this resource */
     public hasLike() {
         return this.getYourLike() ? true : false;
     }
 
+    /* Current user like this resource */
     public like() {
         const me = this.client.auth.me;
         if(me) {
@@ -69,6 +92,7 @@ export default class Resource extends Base {
         }
     }
 
+    /* Current user unlike this resource */
     public unlike() {
         const l = this.getYourLike();
         if(l) {

@@ -4,14 +4,25 @@ import Client from "../client/Client";
 import { APICategoryData } from "../@types";
 import CategoryResourceManager from "../managers/CategoryResourceManager";
 
+/** Represents an category */
 export default class Category extends Base {
 
+    /** Name of this category */
     public name: string;
+    
+    /** Visiblity of this category */
     public isVisible: boolean;
+    
+    /** Creation date */
     public createdAt: Date;
+    
+    /** Updated date */
     public updatedAt: Date | null;
 
+    /** User have created this category */
     public creator: User | null;
+
+    /** Linked resource */
     public resources: CategoryResourceManager;
 
     constructor(client: Client, data: APICategoryData) {

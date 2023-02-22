@@ -4,9 +4,13 @@ import Resource from "./Resource";
 import Client from "../client/Client";
 import { APIResourceUserLikeData } from "../@types";
 
+/** Represents an like from a user to a resource */
 export default class UserLike extends Base {
 
+    /** User who has like */
     public user: User | null;
+    
+    /** Resource who has liked */
     public resource: Resource;
     
     constructor(client: Client, resource: Resource, data: APIResourceUserLikeData) {

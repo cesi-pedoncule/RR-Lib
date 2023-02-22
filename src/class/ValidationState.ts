@@ -7,18 +7,23 @@ import {
 } from "../@types";
 import Resource from "./Resource";
 
+/** Represents an validation state for a resource */
 export default class ValidationState extends Base {
 
-    public id: string;
+    /** Value of the state */
     public state: APIValidationState;
+    
+    /** Las update */
     public updatedAt: Date | null;
 
+    /** User who intervened */
     public moderator: User | null;
+
+    /** The linked resource */
     public resource: Resource | null;
 
     constructor(client: Client, data: APIValidationStateData) {
         super(client, data.id, "/validation_states");
-        this.id = data.id;
         this.state = data.state;
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
