@@ -15,7 +15,19 @@ export default class ResourceCategoryManager extends BaseManager {
     constructor(resource: Resource) {
         super(resource.client);
         this.resource = resource;
-        this.cache = this.client.categories.cache.filter(c => c.resources.cache.has(resource.id));
+        this.cache = new Collection();
+        
+        this.refresh();
+    }
+
+    /** Refresh this cache */
+    public refresh() {
+        for(const c of this.resource.data.categories) {
+            const category = this.client.categories.cache.get(c.id);
+            if(category) {
+                this.cache.set(category.id, category);
+            }
+        }
     }
 
     /** Add a new category for this resource */
