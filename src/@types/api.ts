@@ -30,8 +30,10 @@ export interface APICategoryData {
     createdAt: string;
     updatedAt: string | null;
 
+    resources: APICategoryResource[];
     creator: APIBaseUserData | null;
 }
+export type APIResourceCategory = Omit<APICategoryData, "resources" | "creator">;
 
 export interface APICommentData {
     id: string;
@@ -53,11 +55,13 @@ export interface APIResourceData {
     
     user: Partial<APIUserData> | null;
     attachments: APIResourceAttachmentData[];
-    categories: Partial<APICategoryData>[];
+    categories: APIResourceCategory[];
     comments: APIResourceCommentData[];
     validationStates: APIResourceValidationStateData[];
     userLikes: APIResourceUserLikeData[];
 }
+export type APICategoryResource = Omit<APIResourceData, "attachments" | "categories" | "comments" | "validationStates" | "userLikes">;
+export type APIUserResource = APICategoryResource;
 
 export interface APIUserFollowData {
     id: string;
@@ -93,7 +97,7 @@ export interface APIUserData {
     updatedAt: string | null;
     isBanned: boolean;
     
-    resources: Partial<APIResourceData>[];
+    resources: APIUserResource[];
     resourceLikes: Partial<APIUserLikeData>[];
     userFollows: Partial<APIUserFollowData>[];
     userFollowers: Partial<APIUserFollowData>[];
