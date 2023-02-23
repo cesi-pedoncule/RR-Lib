@@ -24,8 +24,23 @@ export default class ResourceLikeManager extends BaseManager {
         this.cache = new Collection(data.map(l => [l.id, new UserLike(this.client, this.resource, l)]));
     }
 
+    /** Check if authenticated user has like this resource */
+    public getMeLike() {
+        if(this.client.auth.me) {
+            const me = this.cache.find(l => l.user?.id === this.client.auth.me?.id);
+            if(me) {
+                return me;
+            }
+        }
+        return null;
+    }
+
     /** Add a like to this Resource */
     public async add(like: UserLikeBuilder) {
+        const hasPreviousLike = this.getMeLike();
+        if(hasPreviousLike) {
+            return this.resource;
+        }
         const json = like.setResource(this.resource).toJSON();
         const likeData: APIUserLikeData = await this.client.rest.postRequest("/user_likes", json, true);
         const userLike = new UserLike(this.client, this.resource, likeData);

@@ -69,19 +69,9 @@ export default class Resource extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
-    private getYourLike() {
-        if(this.client.auth.me) {
-            const me = this.likes.cache.find(l => l.user?.id === this.client.auth.me?.id);
-            if(me) {
-                return me;
-            }
-        }
-        return null;
-    }
-
     /* Check if the current user like this resource */
-    public hasLike() {
-        return this.getYourLike() ? true : false;
+    public isLiked() {
+        return this.likes.getMeLike() ? true : false;
     }
 
     /* Current user like this resource */
@@ -94,7 +84,7 @@ export default class Resource extends Base {
 
     /* Current user unlike this resource */
     public unlike() {
-        const l = this.getYourLike();
+        const l = this.likes.getMeLike();
         if(l) {
             this.likes.remove(l);
         }
