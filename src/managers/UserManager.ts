@@ -20,12 +20,10 @@ export default class UserManager extends BaseManager {
 
     private buildCache() {
         const collection = new Collection<string, User>();
-        if(this.client.auth.token) {
-            this.fetchAll()
-                .then(data => {
-                    for(const a of data) collection.set(a.id, a);
-                });
-        }
+        this.fetchAll()
+            .then(data => {
+                for(const a of data) collection.set(a.id, a);
+            });
         return collection;
     }
 
