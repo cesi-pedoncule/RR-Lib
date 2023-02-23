@@ -7,6 +7,9 @@ import CategoryResourceManager from "../managers/CategoryResourceManager";
 /** Represents an category */
 export default class Category extends Base {
 
+    /** API data */
+    public data: APICategoryData;
+
     /** Name of this category */
     public name: string;
     
@@ -28,6 +31,7 @@ export default class Category extends Base {
     constructor(client: Client, data: APICategoryData) {
         super(client, data?.id, "/categories");
 
+        this.data = data;
         this.name = data.name;
         this.isVisible = data.isVisible;
         this.createdAt = new Date(data.createdAt);

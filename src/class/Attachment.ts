@@ -14,6 +14,7 @@ export default class Attachment extends Base {
     public type: string;
     public fileName: string;
     public createdAt: Date;
+    public data: APIResourceAttachmentData;
 
     /** User who have create this attachment */
     public user: User | null;
@@ -28,6 +29,7 @@ export default class Attachment extends Base {
         this.type = data.type;
         this.fileName = data.fileName;
         this.createdAt = new Date(data.createdAt);
+        this.data = data;
 
         this.user = user;
         this.resource = resource;

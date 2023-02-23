@@ -7,6 +7,9 @@ import { APIResourceCommentData } from "../@types";
 /** Represents an resource comment */
 export default class Comment extends Base {
 
+    /** API data */
+    public data: APIResourceCommentData;
+
     /** Message of the user */
     public comment: string;
     
@@ -22,6 +25,7 @@ export default class Comment extends Base {
     constructor(client: Client, resource: Resource, data: APIResourceCommentData) {
         super(client, data.id, "/comments");
 
+        this.data = data;
         this.resource = resource;
         this.user = data.user ? this.client.users.cache.get(data.user?.id) ?? null : null;
 

@@ -9,6 +9,9 @@ import {
 /** Represents an user */
 export default class User extends Base {
 
+    /** API data */
+    public data: APIUserData;
+
     /** User's email */
     public email: string;
 
@@ -33,6 +36,7 @@ export default class User extends Base {
     constructor(client: Client, data: APIUserData) {
         super(client, data.id, "/users");
 
+        this.data = data;
         this.email = data.email;
         this.roles = data.roles;
         this.name = data.name;

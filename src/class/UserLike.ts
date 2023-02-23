@@ -7,6 +7,9 @@ import { APIResourceUserLikeData } from "../@types";
 /** Represents an like from a user to a resource */
 export default class UserLike extends Base {
 
+    /** API data */
+    public data: APIResourceUserLikeData;
+
     /** User who has like */
     public user: User | null;
     
@@ -15,6 +18,7 @@ export default class UserLike extends Base {
     
     constructor(client: Client, resource: Resource, data: APIResourceUserLikeData) {
         super(client, data.id, "/user_likes");
+        this.data = data;
         this.resource = resource;
         this.user = this.client.users.cache.get(data.user.id) ?? null;
     }

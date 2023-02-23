@@ -14,6 +14,9 @@ import ResourceValidationStateManager from "../managers/ResourceValidationStateM
 /** Represents an resource */
 export default class Resource extends Base {
 
+    /** API data */
+    public data: APIResourceData;
+
     /** The resource's title */
     public title: string;
     
@@ -50,6 +53,7 @@ export default class Resource extends Base {
     constructor(client: Client, data: APIResourceData) {
         super(client, data.id, "/resources");
 
+        this.data = data;
         this.title = data.title;
         this.description = data.description;
         this.createdAt = new Date(data.createdAt);

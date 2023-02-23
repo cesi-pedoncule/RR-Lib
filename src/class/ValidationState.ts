@@ -10,6 +10,9 @@ import Resource from "./Resource";
 /** Represents an validation state for a resource */
 export default class ValidationState extends Base {
 
+    /** API data */
+    public data: APIValidationStateData;
+
     /** Value of the state */
     public state: APIValidationState;
     
@@ -24,6 +27,7 @@ export default class ValidationState extends Base {
 
     constructor(client: Client, data: APIValidationStateData) {
         super(client, data.id, "/validation_states");
+        this.data = data;
         this.state = data.state;
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
