@@ -30,7 +30,7 @@ export default class AttachmentBuilder implements AttachmentDataBuilder {
     public toJSON() {
         return {
             file: this.file,
-            ressource: this.resource?.getIri(),
+            resource: this.resource?.getIri(),
         };
     }
 }

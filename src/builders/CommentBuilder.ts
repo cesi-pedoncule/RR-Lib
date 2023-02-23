@@ -30,7 +30,7 @@ export default class CommentBuilder implements CommentDataBuilder {
     public toJSON() {
         return {
             comment: this.comment,
-            ressource: this.resource?.getIri(),
+            resource: this.resource?.getIri(),
         };
     }
 }
