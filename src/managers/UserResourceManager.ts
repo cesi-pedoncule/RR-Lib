@@ -17,4 +17,14 @@ export default class UserResourceManager extends BaseManager {
         this.user = user;
         this.cache = this.client.resources.cache.filter(r => r.user?.id === user.id);
     }
+
+    /** Refresh this cache */
+    public refresh() {
+        for(const r of this.user.data.resources) {
+            const resource = this.client.resources.cache.get(r.id);
+            if(resource) {
+                this.cache.set(resource.id, resource);
+            }
+        }
+    }
 }
