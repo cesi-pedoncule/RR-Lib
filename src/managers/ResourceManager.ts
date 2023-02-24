@@ -15,24 +15,19 @@ export default class ResourceManager extends BaseManager {
 
     constructor(client: Client) {
         super(client);
-        this.cache = this.buildCache();
-    }
+        this.cache = new Collection();
 
-    private buildCache() {
-        const collection = new Collection<string, Resource>();
-        this.fetchAll()
-            .then(data => {
-                if(Array.isArray(data)) {
-                    for(const a of data) collection.set(a.id, a);             
-                }
-            });
-        return collection;
+        this.fetchAll();
     }
 
     /** Fetch all existing resources from the api */
     public async fetchAll() {
         const data: APIResourceData[] = await this.client.rest.getRequest("/resources");
-        return data.map(d => new Resource(this.client, d));
+        for(const r of data) {
+            const resource = new Resource(this.client, r);
+            this.cache.set(resource.id, resource);
+        }
+        return this.cache;
     }
 
     /** Fetch one resource with an id from the api */

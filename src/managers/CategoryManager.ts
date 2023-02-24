@@ -15,24 +15,19 @@ export default class CategoryManager extends BaseManager {
 
     constructor(client: Client) {
         super(client);
-        this.cache = this.buildCache();
-    }
+        this.cache = new Collection();
 
-    private buildCache() {
-        const collection = new Collection<string, Category>();
-        this.fetchAll()
-            .then(data => {
-                if(Array.isArray(data)) {
-                    for(const c of data) collection.set(c.id, c);             
-                }
-            });
-        return collection;
+        this.fetchAll();
     }
 
     /** Fetch all existing categories from the api */
     public async fetchAll() {
         const data: APICategoryData[] = await this.client.rest.getRequest("/categories");
-        return data.map(d => new Category(this.client, d));
+        for(const c of data) {
+            const categorie = new Category(this.client, c);
+            this.cache.set(categorie.id, categorie);
+        }
+        return this.cache;
     }
 
     /** Fetch one category with an id from the api */

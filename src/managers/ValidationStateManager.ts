@@ -15,24 +15,19 @@ export default class ValidationStateManager extends BaseManager {
 
     constructor(client: Client) {
         super(client);
-        this.cache = this.buildCache();
-    }
+        this.cache = new Collection();
 
-    private buildCache() {
-        const collection = new Collection<string, ValidationState>();
-        this.fetchAll()
-            .then(data => {
-                if(Array.isArray(data)) {
-                    for(const c of data) collection.set(c.id, c);             
-                }
-            });
-        return collection;
+        this.fetchAll();
     }
 
     /** Fetch all existing validations state from the api */
     public async fetchAll() {
         const data: APIValidationStateData[] = await this.client.rest.getRequest("/validation_states");
-        return data.map(d => new ValidationState(this.client, d));
+        for(const v of data) {
+            const validation = new ValidationState(this.client, v);
+            this.cache.set(validation.id, validation);
+        }
+        return this.cache;
     }
 
     /** Fetch one validation with an id from the api */

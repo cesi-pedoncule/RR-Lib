@@ -15,22 +15,19 @@ export default class UserManager extends BaseManager {
 
     constructor(client: Client) {
         super(client);
-        this.cache = this.buildCache();
-    }
+        this.cache = new Collection();
 
-    private buildCache() {
-        const collection = new Collection<string, User>();
-        this.fetchAll()
-            .then(data => {
-                for(const a of data) collection.set(a.id, a);
-            });
-        return collection;
+        this.fetchAll();
     }
 
     /** Fetch all existing users from the api */
     public async fetchAll() {
         const data: APIUserData[] = await this.client.rest.getRequest("/users");
-        return data.map(d => new User(this.client, d));
+        for(const u of data) {
+            const user = new User(this.client, u);
+            this.cache.set(user.id, user);
+        }
+        return this.cache;
     }
 
     /** Fetch an existing user from the api */
