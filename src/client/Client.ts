@@ -47,6 +47,8 @@ export default class Client {
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
+
+        this.fetch();
     }
 
     /** Login user with username and password */
@@ -54,14 +56,19 @@ export default class Client {
         return this.auth.login(username, password);
     }
 
+    /** Hydrate all data in managers */
+    public async fetch() {
+        await this.users.fetchAll();
+        await this.categories.fetchAll();
+        await this.resources.fetchAll();
+        await this.validations.fetchAll();
+
+        // Refresh managers
+        this.refresh();
+    }
+
     /** Refresh managers */
     public refresh() {
-        this.users = new UserManager(this);
-        this.categories = new CategoryManager(this);
-        this.validations = new ValidationStateManager(this);
-        this.resources = new ResourceManager(this);
-
-        // Refresh internal cache
         this.users.cache.each(u => u.refresh());
         this.categories.cache.each(c => c.refresh());
         this.resources.cache.each(r => r.refresh());

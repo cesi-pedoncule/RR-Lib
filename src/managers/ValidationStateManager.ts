@@ -16,8 +16,6 @@ export default class ValidationStateManager extends BaseManager {
     constructor(client: Client) {
         super(client);
         this.cache = new Collection();
-
-        this.fetchAll();
     }
 
     /** Fetch all existing validations state from the api */

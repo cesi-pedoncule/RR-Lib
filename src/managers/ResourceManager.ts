@@ -16,8 +16,6 @@ export default class ResourceManager extends BaseManager {
     constructor(client: Client) {
         super(client);
         this.cache = new Collection();
-
-        this.fetchAll();
     }
 
     /** Fetch all existing resources from the api */

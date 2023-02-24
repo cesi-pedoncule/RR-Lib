@@ -16,8 +16,6 @@ export default class UserManager extends BaseManager {
     constructor(client: Client) {
         super(client);
         this.cache = new Collection();
-
-        this.fetchAll();
     }
 
     /** Fetch all existing users from the api */

@@ -16,8 +16,6 @@ export default class CategoryManager extends BaseManager {
     constructor(client: Client) {
         super(client);
         this.cache = new Collection();
-
-        this.fetchAll();
     }
 
     /** Fetch all existing categories from the api */

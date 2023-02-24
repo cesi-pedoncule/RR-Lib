@@ -4,10 +4,7 @@ import Resource from "../class/Resource";
 import UserLike from "../class/UserLike";
 import BaseManager from "./BaseManager";
 import UserLikeBuilder from "../builders/UserLikeBuilder";
-import {
-    APIResourceUserLikeData,
-    APIUserLikeData
-} from "../@types";
+import { APIUserLikeData } from "../@types";
 
 export default class ResourceLikeManager extends BaseManager {
 
