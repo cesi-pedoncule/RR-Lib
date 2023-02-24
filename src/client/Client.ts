@@ -20,7 +20,10 @@ export interface ClientConfig extends CreateAxiosDefaults {
  */
 export default class Client {
     
+    /** Auth client */
     public auth: Auth;
+
+    /** REST client */
     public rest: REST;
 
     /** Users manager for this client */
