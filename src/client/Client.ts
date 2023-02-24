@@ -40,10 +40,10 @@ export default class Client {
         this.rest = new REST(this, config);
         this.auth = new Auth(this);
 
+        this.users = new UserManager(this);
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
-        this.users = new UserManager(this);
     }
 
     /** Login user with username and password */
@@ -53,9 +53,9 @@ export default class Client {
 
     /** Refresh managers */
     public refresh() {
+        this.users = new UserManager(this);
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
-        this.users = new UserManager(this);
     }
 }
