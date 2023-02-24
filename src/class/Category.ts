@@ -37,12 +37,18 @@ export default class Category extends Base {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
-        this.creator = this.getCreator(data?.creator?.id);
+        this.creator = this.getCreator(this.data.creator?.id);
         this.resources = new CategoryResourceManager(this);
     }
 
     private getCreator(id?: string | null) {
         return id ? this.client.users.cache.get(id) ?? null : null;
+    }
+
+    /** Refresh all category managers */
+    public refresh() {
+        this.resources.refresh();
+        this.creator = this.getCreator(this.data.creator?.id);
     }
 
     /** Return data for api request */

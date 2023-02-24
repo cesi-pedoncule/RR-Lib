@@ -39,6 +39,11 @@ export default class ValidationState extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
+    public refresh() {
+        this.moderator = this.getModerator(this.data.moderator?.id);
+        this.resource = this.data.resource?.id ? this.client.resources.cache.get(this.data.resource.id) ?? null : null;
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {

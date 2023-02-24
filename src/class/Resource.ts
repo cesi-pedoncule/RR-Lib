@@ -73,6 +73,12 @@ export default class Resource extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
+    /** Refresh all resource managers */
+    public refresh() {
+        this.categories.refresh();
+        this.user = this.getCreator(this.data.user?.id);
+    }
+
     /* Check if the current user like this resource */
     public isLiked() {
         return this.likes.getMeLike() ? true : false;

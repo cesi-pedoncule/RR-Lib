@@ -20,7 +20,12 @@ export default class UserLike extends Base {
         super(client, data.id, "/user_likes");
         this.data = data;
         this.resource = resource;
-        this.user = this.client.users.cache.get(data.user.id) ?? null;
+        this.user = this.client.users.cache.get(this.data.user.id) ?? null;
+    }
+
+    /** Refresh all resource managers */
+    public refresh() {
+        this.user = this.client.users.cache.get(this.data.user.id) ?? null;
     }
 
     /** Return data for api request */

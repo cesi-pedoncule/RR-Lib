@@ -57,5 +57,11 @@ export default class Client {
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
+
+        // Refresh internal cache
+        this.users.cache.each(u => u.refresh());
+        this.categories.cache.each(c => c.refresh());
+        this.resources.cache.each(r => r.refresh());
+        this.validations.cache.each(v => v.refresh());
     }
 }

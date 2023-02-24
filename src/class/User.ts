@@ -47,6 +47,11 @@ export default class User extends Base {
         this.resources = new UserResourceManager(this);
     }
 
+    /** Refresh all user managers */
+    public refresh() {
+        this.resources.refresh();
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {
