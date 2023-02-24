@@ -16,7 +16,7 @@ export default class ValidationState extends Base {
     /** Value of the state */
     public state: APIValidationState;
     
-    /** Las update */
+    /** Last update */
     public updatedAt: Date | null;
 
     /** User who intervened */

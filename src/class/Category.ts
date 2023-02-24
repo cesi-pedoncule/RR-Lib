@@ -19,7 +19,7 @@ export default class Category extends Base {
     /** Creation date */
     public createdAt: Date;
     
-    /** Updated date */
+    /** Last updated date */
     public updatedAt: Date | null;
 
     /** User have created this category */

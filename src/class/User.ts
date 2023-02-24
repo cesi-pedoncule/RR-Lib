@@ -27,7 +27,7 @@ export default class User extends Base {
     /** Creation date of the account */
     public createdAt: Date;
 
-    /** Last updated datel */
+    /** Last updated date */
     public updatedAt: Date | null;
 
     /** Resources manager for this user */
