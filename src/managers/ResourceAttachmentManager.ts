@@ -18,18 +18,14 @@ export default class ResourceAttachmentManager extends BaseManager {
     /** Attachments cache from the resource */
     public cache: Collection<string, Attachment>;
 
-    constructor(resource: Resource, data: APIResourceAttachmentData[]) {
+    constructor(resource: Resource) {
         super(resource.client);
         this.resource = resource;
-        this.cache = this.buildAttachmentCache(data);
-    }
+        this.cache = new Collection();
 
-    private buildAttachmentCache(data: APIResourceAttachmentData[]) {
-        const final: Collection<string, Attachment> = new Collection();
-        for(const a of data) {
-            final.set(a.id, new Attachment(this.client, this.resource, null, a));
+        for(const a of this.resource.data.attachments) {
+            this.cache.set(a.id, new Attachment(this.client, this.resource, null, a));
         }
-        return final;
     }
 
     /** Upload a new attachment for this resource */

@@ -17,10 +17,15 @@ export default class ResourceCommentManager extends BaseManager {
     /** Comments cache from the resource */
     public cache: Collection<string, Comment>;
 
-    constructor(resource: Resource, data: APIResourceCommentData[]) {
+    constructor(resource: Resource) {
         super(resource.client);
         this.resource = resource;
-        this.cache = new Collection(data.map(c => [c.id, new Comment(this.client, this.resource, c)]));
+        this.cache = new Collection();
+
+        for(const c of this.resource.data.comments) {
+            const comment = new Comment(this.client, this.resource, c);
+            this.cache.set(comment.id, comment);
+        }
     }
 
     /** Create a new comment for this resource */

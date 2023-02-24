@@ -17,11 +17,16 @@ export default class ResourceLikeManager extends BaseManager {
     /** Likes cache from the resource */
     public cache: Collection<string, UserLike>;
     
-    constructor(resource: Resource, data: APIResourceUserLikeData[]) {
+    constructor(resource: Resource) {
         super(resource.client);
 
         this.resource = resource;
-        this.cache = new Collection(data.map(l => [l.id, new UserLike(this.client, this.resource, l)]));
+        this.cache = new Collection();
+
+        for(const l of this.resource.data.userLikes) {
+            const like = new UserLike(this.client, this.resource, l);
+            this.cache.set(like.id, like);
+        }
     }
 
     /** Check if authenticated user has like this resource */

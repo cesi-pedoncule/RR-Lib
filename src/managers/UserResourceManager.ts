@@ -15,7 +15,9 @@ export default class UserResourceManager extends BaseManager {
     constructor(user: User) {
         super(user.client);
         this.user = user;
-        this.cache = this.client.resources.cache.filter(r => r.user?.id === user.id);
+        this.cache = new Collection();
+
+        this.refresh();
     }
 
     /** Refresh this cache */

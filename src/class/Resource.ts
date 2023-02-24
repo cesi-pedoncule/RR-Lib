@@ -62,10 +62,10 @@ export default class Resource extends Base {
 
         this.user = this.getCreator(data.user?.id);
 
-        this.attachments = new ResourceAttachmentManager(this, data.attachments);
+        this.attachments = new ResourceAttachmentManager(this);
         this.categories = new ResourceCategoryManager(this);
-        this.comments = new ResourceCommentManager(this, data.comments);
-        this.likes = new ResourceLikeManager(this, data.userLikes);
+        this.comments = new ResourceCommentManager(this);
+        this.likes = new ResourceLikeManager(this);
         this.validations = new ResourceValidationStateManager(this);
     }
 
