@@ -29,7 +29,7 @@ export default class ResourceLikeManager extends BaseManager {
     /** Check if authenticated user has like this resource */
     public getMeLike() {
         if(this.client.auth.me) {
-            const me = this.cache.find(l => l.user?.id === this.client.auth.me?.id);
+            const me = this.cache.find(l => l.userId === this.client.auth.me?.id);
             if(me) {
                 return me;
             }

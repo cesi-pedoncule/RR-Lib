@@ -10,7 +10,10 @@ export default class UserLike extends Base {
     /** API data */
     public data: APIResourceUserLikeData;
 
-    /** User who has like */
+    /** UserId who has liked */
+    public userId: string;
+
+    /** User who has liked */
     public user: User | null;
     
     /** Resource who has liked */
@@ -20,19 +23,20 @@ export default class UserLike extends Base {
         super(client, data.id, "/user_likes");
         this.data = data;
         this.resource = resource;
-        this.user = this.client.users.cache.get(this.data.user.id) ?? null;
+        this.userId = this.data.user.id;
+        this.user = this.client.users.cache.get(this.userId) ?? null;
     }
 
     /** Refresh all resource managers */
     public refresh() {
-        this.user = this.client.users.cache.get(this.data.user.id) ?? null;
+        this.user = this.client.users.cache.get(this.userId) ?? null;
     }
 
     /** Return data for api request */
     public toJSON() {
         return {
             id: this.id,
-            user: this.user?.getIri(),
+            user: `/users/${this.userId}`,
             resource: this.resource.getIri(),
         }
     }

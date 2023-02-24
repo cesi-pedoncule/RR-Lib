@@ -27,7 +27,7 @@ export default class Comment extends Base {
 
         this.data = data;
         this.resource = resource;
-        this.user = data.user ? this.client.users.cache.get(data.user?.id) ?? null : null;
+        this.user = data.user ? this.client.users.cache.get(data.user.id) ?? null : null;
 
         this.comment = data.comment;
         this.createdAt = new Date(data.createdAt);

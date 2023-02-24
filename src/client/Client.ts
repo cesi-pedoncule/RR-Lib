@@ -47,8 +47,6 @@ export default class Client {
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
         this.resources = new ResourceManager(this);
-
-        this.fetch();
     }
 
     /** Login user with username and password */
