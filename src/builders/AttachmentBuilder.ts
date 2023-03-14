@@ -1,23 +1,23 @@
 import Ressource from "../class/Resource";
 
 export interface AttachmentDataBuilder {
-    file: string;
+    file?: File;
     resource?: Ressource;
 }
 
 /** Represents a attachment in a ressource */
 export default class AttachmentBuilder implements AttachmentDataBuilder {
 
-    public file: string;
+    public file?: File;
     public resource?: Ressource;
 
     constructor(data?: Partial<AttachmentDataBuilder>) {
-        this.file = data?.file ?? "";
+        this.file = data?.file;
         this.resource = data?.resource;
     }
 
-    public setData(data: string) {
-        this.file = data;
+    public setFile(file: File) {
+        this.file = file;
         return this;
     }
 

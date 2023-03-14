@@ -2,6 +2,8 @@ import axios, {
     AxiosInstance,
     CreateAxiosDefaults
 } from 'axios';
+import { APIResourceAttachmentData } from '../@types';
+import AttachmentBuilder from '../builders/AttachmentBuilder';
 import Client from './Client';
 
 export enum RequestMethod {
@@ -63,6 +65,34 @@ export default class REST {
 
         if(response.status === 404) {
             return null;
+        }
+
+        throw new Error(`Error ${response.status}, ${response.statusText}`);
+    }
+
+    public async postAttachmentResource(attachmentBuilder: AttachmentBuilder) {
+        
+        this.client.auth.checkAuth();
+
+        if(!attachmentBuilder.file || !attachmentBuilder.resource) {
+            throw new Error("Error: Thanks to provide a valid file and resource");
+        }
+
+        const formData = new FormData();
+        formData.set('file', attachmentBuilder.file);
+        formData.set('resource', attachmentBuilder.resource.id);
+        
+        const response = await this.instance({
+            url: "/attachments/resource",
+            method: RequestMethod.Post,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            data: formData
+        });
+
+        if(response.status === 201) {
+            return response.data as APIResourceAttachmentData;
         }
 
         throw new Error(`Error ${response.status}, ${response.statusText}`);
