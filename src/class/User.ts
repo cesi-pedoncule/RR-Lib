@@ -42,7 +42,7 @@ export default class User extends Base {
         this.name = data.name;
         this.firstname = data.firstname;
         this.createdAt = new Date(data.createdAt);
-        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
         this.resources = new UserResourceManager(this);
     }
