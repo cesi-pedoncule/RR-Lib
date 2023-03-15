@@ -107,7 +107,7 @@ export default class Resource extends Base {
             title: this.title,
             description: this.description,
             isPublic: this.isPublic,
-            categories: Array.from(this.categories.cache.keys()),
+            categories: this.categories.cache.map(c => c.getIri()),
         }
     }
 }
