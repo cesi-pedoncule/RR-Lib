@@ -3,7 +3,7 @@ import { Collection } from "@discordjs/collection";
 import Client from "../client/Client";
 import BaseManager from "./BaseManager";
 import Resource from "../class/Resource";
-import { APIResourceData } from "../@types";
+import { APIResourceData, APIValidationState } from "../@types";
 import ResourceBuilder from "../builders/ResourceBuilder";
 
 /** Resource manager which allow to manipulate 
@@ -16,6 +16,12 @@ export default class ResourceManager extends BaseManager {
     constructor(client: Client) {
         super(client);
         this.cache = new Collection();
+    }
+
+    public getValidateResources() {
+        return this.cache.filter(r => 
+            r.validations.getLastValidationState().state === APIValidationState.Validated
+        );
     }
 
     /** Fetch all existing resources from the api */

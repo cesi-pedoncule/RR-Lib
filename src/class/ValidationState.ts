@@ -17,7 +17,7 @@ export default class ValidationState extends Base {
     public state: APIValidationState;
     
     /** Last update */
-    public updatedAt: Date | null;
+    public updatedAt: Date;
 
     /** User who intervened */
     public moderator: User | null;
@@ -29,7 +29,7 @@ export default class ValidationState extends Base {
         super(client, data.id, "/validation_states");
         this.data = data;
         this.state = data.state;
-        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+        this.updatedAt = new Date(data.updatedAt);
 
         this.moderator = this.getModerator(data.moderator?.id);
         this.resource = data.resource?.id ? this.client.resources.cache.get(data.resource.id) ?? null : null;

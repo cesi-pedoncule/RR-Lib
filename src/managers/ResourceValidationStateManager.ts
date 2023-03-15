@@ -15,7 +15,28 @@ export default class ResourceValidationStateManager extends BaseManager {
     constructor(resource: Resource) {
         super(resource.client);
         this.resource = resource;
-        this.cache = this.resource.client.validations.cache.filter(v => v.resource?.id === this.resource.id);
+        this.cache = new Collection();
+
+        this.refresh();
+    }
+
+    /** Refresh this cache */
+    public refresh() {
+        for(const c of this.resource.data.validationStates) {
+            const validationState = this.client.validations.cache.get(c.id);
+            if(validationState) {
+                this.cache.set(validationState.id, validationState);
+            }
+        }
+    }
+
+    /** Get last validation state */
+    public getLastValidationState() {
+        const defaultArray = Array.from(this.cache.values());
+        const sortByDate = defaultArray.sort((v1, v2) => 
+            v2.updatedAt.getTime() - v1.updatedAt.getTime()
+        );
+        return sortByDate[0];
     }
 
     /** Create a new validation state for this resource */
