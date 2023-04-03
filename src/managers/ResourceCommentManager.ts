@@ -1,9 +1,6 @@
+import { APICommentData } from "../@types";
 import { Collection } from "@discordjs/collection";
 import CommentBuilder from "../builders/CommentBuilder";
-import {
-    APICommentData,
-    APIResourceCommentData
-} from "../@types";
 
 import Comment from "../class/Comment";
 import Resource from "../class/Resource";
@@ -26,6 +23,16 @@ export default class ResourceCommentManager extends BaseManager {
             const comment = new Comment(this.client, this.resource, c);
             this.cache.set(comment.id, comment);
         }
+
+        const sorted = this.sort();
+        this.cache = sorted;
+    }
+
+    /** Sort comments by created date */
+    public sort() {
+        return this.cache.sort((c1, c2) => 
+            c2.createdAt.getTime() - c1.createdAt.getTime()
+        );
     }
 
     /** Create a new comment for this resource */
