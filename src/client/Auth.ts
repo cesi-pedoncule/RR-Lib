@@ -39,11 +39,6 @@ export default class Auth {
         this.refreshInterval = null;
     }
 
-    private async getCurrentUser() {
-        const data: APIUserData = await this.client.rest.getRequest("/users/me", true);
-        return new User(this.client, data);
-    }
-
     private startRefreshInterval() {
         this.refreshInterval = setInterval(() => this.refresh(), 36e5);
     }
@@ -53,6 +48,13 @@ export default class Auth {
             clearInterval(this.refreshInterval);
         }
         this.refreshInterval = null;
+    }
+
+    /** Fetch current user from API */
+    public async fetchCurrentUser() {
+        const data: APIUserData = await this.client.rest.getRequest("/users/me", true);
+        this.me = new User(this.client, data);
+        return this.me;
     }
 
     /** Throw error if user is not connected (for protected routes) */
@@ -75,7 +77,7 @@ export default class Auth {
 
         this.startRefreshInterval();
 
-        this.me = await this.getCurrentUser();
+        await this.fetchCurrentUser();
         this.client.refresh();
         return data;
     }
@@ -106,7 +108,7 @@ export default class Auth {
 
         this.startRefreshInterval();
 
-        this.me = await this.getCurrentUser();
+        await this.fetchCurrentUser();
         this.client.refresh();
         return data;
     }
