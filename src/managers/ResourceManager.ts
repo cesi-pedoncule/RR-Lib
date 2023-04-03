@@ -38,9 +38,9 @@ export default class ResourceManager extends BaseManager {
     public async fetch(id: string) {
         const data: APIResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
         if(data) {
-            const ressource = new Resource(this.client, data);
-            this.cache.set(ressource.id, ressource);
-            return ressource;
+            const resource = new Resource(this.client, data);
+            this.cache.set(resource.id, resource);
+            return resource;
         }
         return null;      
     }
@@ -49,17 +49,25 @@ export default class ResourceManager extends BaseManager {
     public async create(builder: ResourceBuilder) {
         const data = builder.toJSON();
         const ressourceData: APIResourceData = await this.client.rest.postRequest('/resources', data);
-        const ressource = new Resource(this.client, ressourceData);
-        this.cache.set(ressource.id, ressource);
-        return ressource;
+        const resource = new Resource(this.client, ressourceData);
+        this.cache.set(resource.id, resource);
+        this.refreshCategoryManager(resource)
+        return resource;
     }
 
     /** Edit an existing resource */
-    public async edit(ressource: Resource) {
-        const data = ressource.toJSON();
-        const ressourceData: APIResourceData = await this.client.rest.putRequest(`/resources/${ressource.id}`, data);
-        const editRessource = new Resource(this.client, ressourceData);
-        this.cache.set(editRessource.id, editRessource);
-        return editRessource;
+    public async edit(resource: Resource) {
+        const data = resource.toJSON();
+        const resourceData: APIResourceData = await this.client.rest.putRequest(`/resources/${resource.id}`, data);
+        const editResource = new Resource(this.client, resourceData);
+        this.cache.set(editResource.id, editResource);
+        this.refreshCategoryManager(editResource);
+        return editResource;
+    }
+
+    private refreshCategoryManager(resource: Resource) {
+        resource.categories.cache.forEach((c) => 
+            c.client.resources.cache.set(resource.id, resource)
+        );
     }
 }
