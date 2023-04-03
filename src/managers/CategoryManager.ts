@@ -56,4 +56,11 @@ export default class CategoryManager extends BaseManager {
         this.cache.set(editCategory.id, editCategory);
         return editCategory;
     }
+
+    /** Delete an existing category */
+    public async delete(category: Category) {
+        await this.client.rest.deleteRequest(`/categories/${category.id}`);
+        this.cache.delete(category.id);
+        return category;
+    }
 }

@@ -56,4 +56,11 @@ export default class UserManager extends BaseManager {
         this.cache.set(editUser.id, editUser);
         return editUser;
     }
+
+    /** Delete an existing user */
+    public async delete(user: User) {
+        await this.client.rest.deleteRequest(`/users/${user.id}`);
+        this.cache.delete(user.id);
+        return user;
+    }
 }

@@ -65,9 +65,17 @@ export default class ResourceManager extends BaseManager {
         return editResource;
     }
 
+    /** Delete an existing resource */
+    public async delete(resource: Resource) {
+        await this.client.rest.deleteRequest(`/resources/${resource.id}`);
+        this.cache.delete(resource.id);
+        return resource;
+    }
+
     private refreshCategoryManager(resource: Resource) {
-        resource.categories.cache.forEach((c) => 
-            c.client.resources.cache.set(resource.id, resource)
-        );
+        resource.categories.cache.forEach((c) => {
+            c.client.resources.cache.set(resource.id, resource);
+            c.resources.cache.set(resource.id, resource);
+        });
     }
 }
