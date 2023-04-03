@@ -88,7 +88,7 @@ export default class Resource extends Base {
     public like() {
         const me = this.client.auth.me;
         if(me) {
-            this.likes.add(new UserLikeBuilder().setUser(me));
+            return this.likes.add(new UserLikeBuilder().setUser(me));
         }
     }
 
@@ -96,7 +96,7 @@ export default class Resource extends Base {
     public unlike() {
         const l = this.likes.getMeLike();
         if(l) {
-            this.likes.remove(l);
+            return this.likes.remove(l);
         }
     }
 
