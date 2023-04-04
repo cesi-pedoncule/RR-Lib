@@ -34,7 +34,7 @@ export default class ResourceCategoryManager extends BaseManager {
     public async add(category: Category) {
         this.cache.set(category.id, category);
         const json = this.resource.toJSON();
-        await this.client.rest.putRequest(`/ressources/${this.resource.id}`, json);
+        await this.client.rest.putRequest(`/resources/${this.resource.id}`, json);
         return this.resource;
     }
 
@@ -42,7 +42,7 @@ export default class ResourceCategoryManager extends BaseManager {
     public async remove(category: Category) {
         this.cache.delete(category.id);
         const json = this.resource.toJSON();
-        await this.client.rest.putRequest(`/ressources/${this.resource.id}`, json);
+        await this.client.rest.putRequest(`/resources/${this.resource.id}`, json);
         return this.resource;
     }
 }
