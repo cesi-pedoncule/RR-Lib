@@ -71,7 +71,6 @@ export default class ResourceBuilder implements ResourceDataBuilder {
             title: this.title,
             description: this.description,
             isPublic: this.isPublic,
-            attachments: this.attachments.map(a => a.toJSON()),
             categories: this.categories.map(c => c.getIri()),
         }
     }
