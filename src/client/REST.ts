@@ -80,8 +80,20 @@ export default class REST {
         }
 
         const formData = new FormData();
-        formData.set('file', attachmentBuilder.file);
-        formData.set('resource', attachmentBuilder.resource.id);
+        formData.append('resource', attachmentBuilder.resource.id);
+
+        if(attachmentBuilder.file instanceof File) {
+            formData.append('file', attachmentBuilder.file, attachmentBuilder.file.name);
+        }
+        else {
+            const file = attachmentBuilder.file;
+            const dataFile: any = {
+                uri: file.uri,
+                name: file.name,
+                type: file.mimeType,
+            }
+            formData.append('file', dataFile);
+        }
         
         const response = await this.instance({
             url: "/attachments/resource",
