@@ -1,15 +1,18 @@
-import Ressource from "../class/Resource";
+import { APIResourceData } from "../@types";
+import Resource from "../class/Resource";
+
+export type ResourceData = Resource | APIResourceData;
 
 export interface AttachmentDataBuilder {
     file?: File;
-    resource?: Ressource;
+    resource?: ResourceData;
 }
 
 /** Represents a attachment in a ressource */
 export default class AttachmentBuilder implements AttachmentDataBuilder {
 
     public file?: File;
-    public resource?: Ressource;
+    public resource?: ResourceData;
 
     constructor(data?: Partial<AttachmentDataBuilder>) {
         this.file = data?.file;
@@ -21,7 +24,7 @@ export default class AttachmentBuilder implements AttachmentDataBuilder {
         return this;
     }
 
-    public setRessource(ressource: Ressource) {
+    public setRessource(ressource: ResourceData) {
         this.resource = ressource;
         return this;
     }
@@ -30,7 +33,7 @@ export default class AttachmentBuilder implements AttachmentDataBuilder {
     public toJSON() {
         return {
             file: this.file,
-            resource: this.resource?.getIri(),
+            resource: this.resource?.id,
         };
     }
 }

@@ -3,8 +3,8 @@ import { Collection } from "@discordjs/collection";
 import Client from "../client/Client";
 import BaseManager from "./BaseManager";
 import Resource from "../class/Resource";
-import { APIResourceData, APIValidationState } from "../@types";
 import ResourceBuilder from "../builders/ResourceBuilder";
+import { APIResourceData, APIValidationState } from "../@types";
 
 /** Resource manager which allow to manipulate 
  * the resources in the api */
@@ -40,6 +40,7 @@ export default class ResourceManager extends BaseManager {
         if(data) {
             const resource = new Resource(this.client, data);
             this.cache.set(resource.id, resource);
+            this.refreshCategoryManager(resource);
             return resource;
         }
         return null;      
@@ -48,10 +49,23 @@ export default class ResourceManager extends BaseManager {
     /** Create a new resource */
     public async create(builder: ResourceBuilder) {
         const data = builder.toJSON();
-        const ressourceData: APIResourceData = await this.client.rest.postRequest('/resources', data);
-        const resource = new Resource(this.client, ressourceData);
+        const resourceData: APIResourceData = await this.client.rest.postRequest('/resources', data);
+        let resource: Resource;
+        
+        if(builder.attachments.length > 0) {
+            for(const a of builder.attachments) {
+                a.setRessource(resourceData);
+                await this.client.rest.postAttachmentResource(a);
+            }
+            const data: APIResourceData = await this.client.rest.getRequest(`/resources/${resourceData.id}`);
+            resource = new Resource(this.client, data);
+        }
+        else {
+            resource = new Resource(this.client, resourceData);
+        }
+        
         this.cache.set(resource.id, resource);
-        this.refreshCategoryManager(resource)
+        this.refreshCategoryManager(resource);
         return resource;
     }
 

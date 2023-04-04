@@ -70,6 +70,7 @@ export default class REST {
         throw new Error(`Error ${response.status}, ${response.statusText}`);
     }
 
+    /** Upload file in a resource */
     public async postAttachmentResource(attachmentBuilder: AttachmentBuilder) {
         
         this.client.auth.checkAuth();
