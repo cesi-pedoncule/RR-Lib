@@ -26,13 +26,24 @@ export default class ResourceLikeManager extends BaseManager {
         }
     }
 
+    private _add(data: APIUserLikeData) {
+        const existing = this.cache.get(data.id);
+        if(existing) {
+            existing._patch(data);
+        }
+        const like = new UserLike(this.client, this.resource, data);
+        this.cache.set(like.id, like);
+    }
+
+    private _remove(id: string) {
+        this.cache.delete(id);
+    }
+
     /** Check if authenticated user has like this resource */
     public getMeLike() {
         if(this.client.auth.me) {
             const me = this.cache.find(l => l.userId === this.client.auth.me?.id);
-            if(me) {
-                return me;
-            }
+            return me ?? null;
         }
         return null;
     }
@@ -45,15 +56,14 @@ export default class ResourceLikeManager extends BaseManager {
         }
         const json = like.setResource(this.resource).toJSON();
         const likeData: APIUserLikeData = await this.client.rest.postRequest("/user_likes", json, true);
-        const userLike = new UserLike(this.client, this.resource, likeData);
-        this.cache.set(userLike.id, userLike);
+        this._add(likeData);
         return this.resource;
     }
 
     /** Delete an existing like to this Resource */
     public async remove(like: UserLike) {
+        this._remove(like.id);
         await this.client.rest.deleteRequest(`/user_likes/${like.id}`);
-        this.cache.delete(like.id);
         return this.resource;
     }
 }

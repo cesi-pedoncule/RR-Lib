@@ -1,10 +1,14 @@
-import { APICommentData } from "../@types";
 import { Collection } from "@discordjs/collection";
 import CommentBuilder from "../builders/CommentBuilder";
 
 import Comment from "../class/Comment";
 import Resource from "../class/Resource";
 import BaseManager from "./BaseManager";
+
+import {
+    APICommentData,
+    APIResourceCommentData,
+} from "../@types";
 
 export default class ResourceCommentManager extends BaseManager {
 
@@ -20,34 +24,44 @@ export default class ResourceCommentManager extends BaseManager {
         this.cache = new Collection();
 
         for(const c of this.resource.data.comments) {
-            const comment = new Comment(this.client, this.resource, c);
-            this.cache.set(comment.id, comment);
+            this._add(c);
         }
+        this.sort();
+    }
 
-        const sorted = this.sort();
-        this.cache = sorted;
+    private _add(data: APIResourceCommentData) {
+        const existing = this.cache.get(data.id);
+        if(existing) {
+            existing._patch(data);
+        }
+        const comment = new Comment(this.client, this.resource, data);
+        this.cache.set(comment.id, comment);
+    }
+
+    private _remove(id: string) {
+        this.cache.delete(id);
     }
 
     /** Sort comments by created date */
     public sort() {
-        return this.cache.sort((c1, c2) => 
+        this.cache.sort((c1, c2) => 
             c2.createdAt.getTime() - c1.createdAt.getTime()
         );
+        return this.cache;
     }
 
     /** Create a new comment for this resource */
     public async create(data: CommentBuilder) {
         const json = data.setRessource(this.resource).toJSON();
         const commentData: APICommentData = await this.client.rest.postRequest("/comments", json);
-        const comment = new Comment(this.client, this.resource, commentData);
-        this.cache.set(comment.id, comment);
+        this._add(commentData);
         return this.resource;
     }
     
     /** Delete a comment for this resource */
     public async delete(comment: Comment) {
+        this._remove(comment.id);
         await this.client.rest.deleteRequest(`/comments/${comment.id}`);
-        this.cache.delete(comment.id);
         return this.resource;
     }
 }

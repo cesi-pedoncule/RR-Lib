@@ -18,23 +18,37 @@ export default class CategoryManager extends BaseManager {
         this.cache = new Collection();
     }
 
+    public _add(data: APICategoryData) {
+        const existing = this.cache.get(data.id);
+        if(existing) {
+            existing._patch(data);
+            return existing;
+        }
+        const category = new Category(this.client, data);
+        this.cache.set(category.id, category);
+        return category;
+    }
+
+    public _remove(id: string) {
+        this.cache.delete(id);
+    }
+
     /** Fetch all existing categories from the api */
     public async fetchAll() {
-        const data: APICategoryData[] = await this.client.rest.getRequest("/categories");
+        const data: APICategoryData[] =
+            await this.client.rest.getRequest("/categories");
         for(const c of data) {
-            const categorie = new Category(this.client, c);
-            this.cache.set(categorie.id, categorie);
+            this._add(c);
         }
         return this.cache;
     }
 
     /** Fetch one category with an id from the api */
     public async fetch(id: string) {
-        const data: APICategoryData | null = await this.client.rest.getRequest(`/categories/${id}`);
+        const data: APICategoryData | null =
+            await this.client.rest.getRequest(`/categories/${id}`);
         if(data) {
-            const category = new Category(this.client, data);
-            this.cache.set(category.id, category);
-            return category;
+            return this._add(data);
         }
         return null;
     }
@@ -42,25 +56,22 @@ export default class CategoryManager extends BaseManager {
     /** Create a new category */
     public async create(builder: CategoryBuilder) {
         const data = builder.toJSON();
-        const categoryData: APICategoryData = await this.client.rest.postRequest('/categories', data);
-        const category = new Category(this.client, categoryData);
-        this.cache.set(category.id, category);
-        return category;
+        const categoryData: APICategoryData =
+            await this.client.rest.postRequest('/categories', data);
+        return this._add(categoryData);
     }
 
     /** Edit an existing category */
     public async edit(category: Category) {
         const data = category.toJSON();
-        const categoryData: APICategoryData = await this.client.rest.putRequest(`/categories/${data.id}`, data);
-        const editCategory = new Category(this.client, categoryData);
-        this.cache.set(editCategory.id, editCategory);
-        return editCategory;
+        const categoryData: APICategoryData =
+            await this.client.rest.putRequest(`/categories/${data.id}`, data);
+        return this._add(categoryData);
     }
 
     /** Delete an existing category */
     public async delete(category: Category) {
         await this.client.rest.deleteRequest(`/categories/${category.id}`);
-        this.cache.delete(category.id);
-        return category;
+        this._remove(category.id);
     }
 }

@@ -3,6 +3,7 @@ import { Collection } from "@discordjs/collection";
 import Category from "../class/Category";
 import Resource from "../class/Resource";
 import BaseManager from "./BaseManager";
+import { APIResourceData } from "../@types";
 
 export default class ResourceCategoryManager extends BaseManager {
 
@@ -30,19 +31,32 @@ export default class ResourceCategoryManager extends BaseManager {
         }
     }
 
-    /** Add a new category for this resource */
-    public async add(category: Category) {
-        this.cache.set(category.id, category);
+    private async putResource() {
         const json = this.resource.toJSON();
-        await this.client.rest.putRequest(`/resources/${this.resource.id}`, json);
+        const updated: APIResourceData =
+            await this.client.rest.putRequest(`/resources/${this.resource.id}`, json);
+        this.resource._patch(updated);
         return this.resource;
     }
 
+    /** Set an array of categories for this resource */
+    public set(categories: Category[]) {
+        this.cache.clear();
+        for(const c of categories) {
+            this.cache.set(c.id, c);
+        }
+        return this.putResource();
+    }
+
+    /** Add a new category for this resource */
+    public add(category: Category) {
+        this.cache.set(category.id, category);
+        return this.putResource();
+    }
+
     /** Remove a category for this resource */
-    public async remove(category: Category) {
+    public remove(category: Category) {
         this.cache.delete(category.id);
-        const json = this.resource.toJSON();
-        await this.client.rest.putRequest(`/resources/${this.resource.id}`, json);
-        return this.resource;
+        return this.putResource();
     }
 }
