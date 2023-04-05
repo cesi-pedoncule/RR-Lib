@@ -33,6 +33,9 @@ export default class ResourceValidationStateManager extends BaseManager {
     /** Get last validation state */
     public getLastValidationState() {
         const defaultArray = Array.from(this.cache.values());
+        if(defaultArray.length === 0) {
+            return null;
+        }
         const sortByDate = defaultArray.sort((v1, v2) => 
             v2.updatedAt.getTime() - v1.updatedAt.getTime()
         );
