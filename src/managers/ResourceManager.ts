@@ -18,30 +18,50 @@ export default class ResourceManager extends BaseManager {
         this.cache = new Collection();
     }
 
+    public _add(data: APIResourceData) {
+        const existing = this.cache.get(data.id);
+        if(existing) {
+            existing._patch(data);
+            existing.categories.cache.forEach(c => {
+                c.resources.cache.delete(existing.id);
+            });
+            return existing;
+        }
+        const resource = new Resource(this.client, data);
+        this.cache.set(resource.id, resource);
+        return resource;
+    }
+
+    public _remove(id: string) {
+        this.cache.delete(id);
+    }
+
     public getValidateResources() {
-        return this.cache.filter(r => 
-            r.validations.getLastValidationState().state === APIValidationState.Validated
-        );
+        const finalCache: Collection<string, Resource> = new Collection();
+        this.cache.forEach(r => {
+            const last = r.validations.getLastValidationState();
+            if(last && last.state === APIValidationState.Validated) {
+                finalCache.set(r.id, r);
+            }
+        })
+        return finalCache;
     }
 
     /** Fetch all existing resources from the api */
     public async fetchAll() {
         const data: APIResourceData[] = await this.client.rest.getRequest("/resources");
         for(const r of data) {
-            const resource = new Resource(this.client, r);
-            this.cache.set(resource.id, resource);
+            this._add(r);
         }
         return this.cache;
     }
 
     /** Fetch one resource with an id from the api */
     public async fetch(id: string) {
-        const data: APIResourceData | null = await this.client.rest.getRequest(`/resources/${id}`);
+        const data: APIResourceData | null =
+            await this.client.rest.getRequest(`/resources/${id}`);
         if(data) {
-            const resource = new Resource(this.client, data);
-            this.cache.set(resource.id, resource);
-            this.refreshCategoryManager(resource);
-            return resource;
+            return this._add(data);
         }
         return null;      
     }
@@ -49,7 +69,8 @@ export default class ResourceManager extends BaseManager {
     /** Create a new resource */
     public async create(builder: ResourceBuilder) {
         const data = builder.toJSON();
-        const resourceData: APIResourceData = await this.client.rest.postRequest('/resources', data);
+        const resourceData: APIResourceData =
+            await this.client.rest.postRequest('/resources', data);
         let resource: Resource;
         
         if(builder.attachments.length > 0) {
@@ -57,39 +78,27 @@ export default class ResourceManager extends BaseManager {
                 a.setRessource(resourceData);
                 await this.client.rest.postAttachmentResource(a);
             }
-            const data: APIResourceData = await this.client.rest.getRequest(`/resources/${resourceData.id}`);
+            const data: APIResourceData =
+                await this.client.rest.getRequest(`/resources/${resourceData.id}`);
             resource = new Resource(this.client, data);
         }
         else {
             resource = new Resource(this.client, resourceData);
         }
-        
-        this.cache.set(resource.id, resource);
-        this.refreshCategoryManager(resource);
-        return resource;
+        return this._add(resourceData);
     }
 
     /** Edit an existing resource */
     public async edit(resource: Resource) {
         const data = resource.toJSON();
-        const resourceData: APIResourceData = await this.client.rest.putRequest(`/resources/${resource.id}`, data);
-        const editResource = new Resource(this.client, resourceData);
-        this.cache.set(editResource.id, editResource);
-        this.refreshCategoryManager(editResource);
-        return editResource;
+        const resourceData: APIResourceData =
+            await this.client.rest.putRequest(`/resources/${resource.id}`, data);
+        return this._add(resourceData);
     }
 
     /** Delete an existing resource */
     public async delete(resource: Resource) {
+        this._remove(resource.id);
         await this.client.rest.deleteRequest(`/resources/${resource.id}`);
-        this.cache.delete(resource.id);
-        return resource;
-    }
-
-    private refreshCategoryManager(resource: Resource) {
-        resource.categories.cache.forEach((c) => {
-            c.client.resources.cache.set(resource.id, resource);
-            c.resources.cache.set(resource.id, resource);
-        });
     }
 }
