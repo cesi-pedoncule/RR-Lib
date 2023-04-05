@@ -39,6 +39,15 @@ export default class ValidationState extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
+    public _patch(data: APIValidationStateData) {
+        this.data = data;
+        this.state = data.state;
+        this.updatedAt = new Date(data.updatedAt);
+
+        this.moderator = this.getModerator(data.moderator?.id);
+        this.resource = data.resource?.id ? this.client.resources.cache.get(data.resource.id) ?? null : null;
+    }
+
     public refresh() {
         this.moderator = this.getModerator(this.data.moderator?.id);
         this.resource = this.data.resource?.id ? this.client.resources.cache.get(this.data.resource.id) ?? null : null;

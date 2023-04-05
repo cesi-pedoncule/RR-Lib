@@ -100,6 +100,25 @@ export default class Resource extends Base {
         }
     }
 
+    public _patch(data: APIResourceData) {
+        this.data = data;
+        this.title = data.title;
+        this.description = data.description;
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+        this.isPublic = data.isPublic;
+
+        this.user = this.getCreator(data.user?.id);
+
+        this.attachments = new ResourceAttachmentManager(this);
+        this.categories = new ResourceCategoryManager(this);
+        this.comments = new ResourceCommentManager(this);
+        this.likes = new ResourceLikeManager(this);
+        this.validations = new ResourceValidationStateManager(this);
+
+        this.client.refresh();
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {
@@ -107,6 +126,7 @@ export default class Resource extends Base {
             title: this.title,
             description: this.description,
             isPublic: this.isPublic,
+            attachments: this.attachments.cache.map(a => a.getIri()),
             categories: this.categories.cache.map(c => c.getIri()),
         }
     }

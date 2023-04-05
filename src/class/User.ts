@@ -47,6 +47,18 @@ export default class User extends Base {
         this.resources = new UserResourceManager(this);
     }
 
+    public _patch(data: APIUserData) {
+        this.data = data;
+        this.email = data.email;
+        this.roles = data.roles;
+        this.name = data.name;
+        this.firstname = data.firstname;
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+
+        this.resources = new UserResourceManager(this);
+    }
+
     /** Refresh all user managers */
     public refresh() {
         this.resources.refresh();

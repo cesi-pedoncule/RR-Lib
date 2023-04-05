@@ -35,6 +35,14 @@ export default class Attachment extends Base {
         this.resource = resource;
     }
 
+    public _patch(data: APIResourceAttachmentData) {
+        this.data = data;
+        this.fileUrl = data.fileUrl;
+        this.type = data.type;
+        this.fileName = data.fileName;
+        this.createdAt = new Date(data.createdAt);
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {

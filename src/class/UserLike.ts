@@ -21,8 +21,15 @@ export default class UserLike extends Base {
     
     constructor(client: Client, resource: Resource, data: APIResourceUserLikeData) {
         super(client, data.id, "/user_likes");
+        
         this.data = data;
         this.resource = resource;
+        this.userId = this.data.user.id;
+        this.user = this.client.users.cache.get(this.userId) ?? null;
+    }
+
+    public _patch(data: APIResourceUserLikeData) {
+        this.data = data;
         this.userId = this.data.user.id;
         this.user = this.client.users.cache.get(this.userId) ?? null;
     }

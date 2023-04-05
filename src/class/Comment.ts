@@ -33,6 +33,13 @@ export default class Comment extends Base {
         this.createdAt = new Date(data.createdAt);
     }
 
+    public _patch(data: APIResourceCommentData) {
+        this.data = data;
+        this.comment = data.comment;
+        this.createdAt = new Date(data.createdAt);
+        this.user = data.user ? this.client.users.cache.get(data.user.id) ?? null : null;
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {

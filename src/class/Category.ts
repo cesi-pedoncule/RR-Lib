@@ -29,7 +29,7 @@ export default class Category extends Base {
     public resources: CategoryResourceManager;
 
     constructor(client: Client, data: APICategoryData) {
-        super(client, data?.id, "/categories");
+        super(client, data.id, "/categories");
 
         this.data = data;
         this.name = data.name;
@@ -43,6 +43,17 @@ export default class Category extends Base {
 
     private getCreator(id?: string | null) {
         return id ? this.client.users.cache.get(id) ?? null : null;
+    }
+
+    public _patch(data: APICategoryData) {
+        this.data = data;
+        this.name = data.name;
+        this.isVisible = data.isVisible;
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+
+        this.creator = this.getCreator(this.data.creator?.id);
+        this.resources = new CategoryResourceManager(this);
     }
 
     /** Refresh all category managers */
