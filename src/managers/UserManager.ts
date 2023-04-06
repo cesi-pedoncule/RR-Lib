@@ -42,7 +42,7 @@ export default class UserManager extends BaseManager {
     /** Create a new user */
     public async create(builder: UserBuilder) {
         const data = builder.toJSON();
-        const ressourceData: APIUserData = await this.client.rest.postRequest('/users', data);
+        const ressourceData: APIUserData = await this.client.rest.postRequest('/users', data, false);
         const ressource = new User(this.client, ressourceData);
         this.cache.set(ressource.id, ressource);
         return ressource;
