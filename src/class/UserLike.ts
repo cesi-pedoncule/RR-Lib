@@ -1,5 +1,4 @@
 import Base from "./Base";
-import User from "./User";
 import Resource from "./Resource";
 import Client from "../client/Client";
 import { APIResourceUserLikeData } from "../@types";
@@ -12,9 +11,6 @@ export default class UserLike extends Base {
 
     /** UserId who has liked */
     public userId: string;
-
-    /** User who has liked */
-    public user: User | null;
     
     /** Resource who has liked */
     public resource: Resource;
@@ -25,18 +21,16 @@ export default class UserLike extends Base {
         this.data = data;
         this.resource = resource;
         this.userId = this.data.user.id;
-        this.user = this.client.users.cache.get(this.userId) ?? null;
+    }
+
+    /** User who has liked */
+    get user() {
+        return this.client.users.cache.get(this.userId) ?? null;
     }
 
     public _patch(data: APIResourceUserLikeData) {
         this.data = data;
         this.userId = this.data.user.id;
-        this.user = this.client.users.cache.get(this.userId) ?? null;
-    }
-
-    /** Refresh all resource managers */
-    public refresh() {
-        this.user = this.client.users.cache.get(this.userId) ?? null;
     }
 
     /** Return data for api request */

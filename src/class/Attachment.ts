@@ -1,4 +1,3 @@
-import User from "./User";
 import Base from "./Base";
 import Resource from "./Resource";
 import Client from "../client/Client";
@@ -15,9 +14,6 @@ export default class Attachment extends Base {
     public fileName: string;
     public createdAt: Date;
     public data: APIResourceAttachmentData;
-
-    /** User who have create this attachment */
-    public user: User | null;
     
     /** Resource of this attachment */
     public resource: Resource;
@@ -32,7 +28,11 @@ export default class Attachment extends Base {
         this.data = data;
 
         this.resource = resource;
-        this.user = resource.user;
+    }
+
+    /** User who have create this attachment */
+    get creator() {
+        return this.resource.creator;
     }
 
     public _patch(data: APIResourceAttachmentData) {

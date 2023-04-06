@@ -1,8 +1,8 @@
-import User from "./User"; 
 import Base from "./Base";
 import Client from "../client/Client";
 import { APICategoryData } from "../@types";
 import CategoryResourceManager from "../managers/CategoryResourceManager";
+import Resource from "./Resource";
 
 /** Represents an category */
 export default class Category extends Base {
@@ -22,9 +22,6 @@ export default class Category extends Base {
     /** Last updated date */
     public updatedAt: Date | null;
 
-    /** User have created this category */
-    public creator: User | null;
-
     /** Linked resource */
     public resources: CategoryResourceManager;
 
@@ -37,12 +34,24 @@ export default class Category extends Base {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
-        this.creator = this.getCreator(this.data.creator?.id);
         this.resources = new CategoryResourceManager(this);
+    }
+
+    /** User have created this category */
+    get creator() {
+        return this.getCreator();
     }
 
     private getCreator(id?: string | null) {
         return id ? this.client.users.cache.get(id) ?? null : null;
+    }
+
+    public _removeResource(resourceId: string) {
+        this.resources.cache.delete(resourceId);
+    }
+
+    public _addResource(resource: Resource) {
+        this.resources.cache.set(resource.id, resource);
     }
 
     public _patch(data: APICategoryData) {
@@ -52,14 +61,7 @@ export default class Category extends Base {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
-        this.creator = this.getCreator(this.data.creator?.id);
         this.resources = new CategoryResourceManager(this);
-    }
-
-    /** Refresh all category managers */
-    public refresh() {
-        this.resources.refresh();
-        this.creator = this.getCreator(this.data.creator?.id);
     }
 
     /** Return data for api request */

@@ -1,7 +1,6 @@
 import { APIResourceData } from "../@types";
 
 import Base from "./Base";
-import User from "./User";
 import Client from "../client/Client";
 import UserLikeBuilder from "../builders/UserLikeBuilder";
 
@@ -32,9 +31,6 @@ export default class Resource extends Base {
     /** Privacy of this resource */
     public isPublic: boolean;
     
-    /**Resource's creator */
-    public user: User | null;
-    
     /** Resource's attachments manager */
     public attachments: ResourceAttachmentManager;
 
@@ -60,8 +56,6 @@ export default class Resource extends Base {
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
         this.isPublic = data.isPublic;
 
-        this.user = this.getCreator(data.user?.id);
-
         this.attachments = new ResourceAttachmentManager(this);
         this.categories = new ResourceCategoryManager(this);
         this.comments = new ResourceCommentManager(this);
@@ -69,19 +63,27 @@ export default class Resource extends Base {
         this.validations = new ResourceValidationStateManager(this);
     }
 
+    /** @deprecated */
+    get user() {
+        return this.getCreator();
+    }
+
+    get creator() {
+        return this.getCreator();
+    }
+
     private getCreator(id?: string | null) {
         return id ? this.client.users.cache.get(id) ?? null : null;
+    }
+
+    /* Check if the current user like this resource */
+    get isLiked() {
+        return this.likes.getMeLike() ? true : false;
     }
 
     /** Refresh all resource managers */
     public refresh() {
         this.categories.refresh();
-        this.user = this.getCreator(this.data.user?.id);
-    }
-
-    /* Check if the current user like this resource */
-    public isLiked() {
-        return this.likes.getMeLike() ? true : false;
     }
 
     /* Current user like this resource */
@@ -107,8 +109,6 @@ export default class Resource extends Base {
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
         this.isPublic = data.isPublic;
-
-        this.user = this.getCreator(data.user?.id);
 
         this.attachments = new ResourceAttachmentManager(this);
         this.categories = new ResourceCategoryManager(this);
