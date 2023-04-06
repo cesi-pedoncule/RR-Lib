@@ -106,18 +106,20 @@ export type APIBaseUserData = Omit<APIUserData, "resources" | "resourceLikes" | 
 
 export interface APIValidationStateData {
     id: string;
-    state: APIValidationState;
+    state: APIStateData;
     updatedAt: string;
     resource: Partial<APIResourceData>;
     moderator: APIBaseUserData;
 }
 export interface APIResourceValidationStateData {
     id: string;
-    state: {
-        id: number;
-        label: string;
-    };
+    state: APIStateData;
     updatedAt: string;
+}
+
+export interface APIStateData {
+    id: number;
+    label: APIValidationState;
 }
 
 // API error

@@ -28,7 +28,7 @@ export default class ValidationState extends Base {
     constructor(client: Client, data: APIValidationStateData) {
         super(client, data.id, "/validation_states");
         this.data = data;
-        this.state = data.state;
+        this.state = data.state.label;
         this.updatedAt = new Date(data.updatedAt);
 
         this.moderator = this.getModerator(data.moderator?.id);
@@ -41,7 +41,7 @@ export default class ValidationState extends Base {
 
     public _patch(data: APIValidationStateData) {
         this.data = data;
-        this.state = data.state;
+        this.state = data.state.label;
         this.updatedAt = new Date(data.updatedAt);
 
         this.moderator = this.getModerator(data.moderator?.id);
