@@ -21,10 +21,17 @@ export default class ResourceManager extends BaseManager {
     public _add(data: APIResourceData) {
         const existing = this.cache.get(data.id);
         if(existing) {
+            const oldCategories = existing.categories.cache;
             existing._patch(data);
-            existing.categories.cache.forEach(c => {
+            const newCategories = existing.categories.cache;
+            // Remove resource from old categories
+            oldCategories.difference(newCategories).forEach(c => {
                 c.resources.cache.delete(existing.id);
             });
+            // add resource to new categories
+            newCategories.difference(oldCategories).forEach(c => {
+                c.resources.cache.set(existing.id, existing);
+            })
             return existing;
         }
         const resource = new Resource(this.client, data);

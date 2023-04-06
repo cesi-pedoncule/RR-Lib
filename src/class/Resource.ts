@@ -115,8 +115,6 @@ export default class Resource extends Base {
         this.comments = new ResourceCommentManager(this);
         this.likes = new ResourceLikeManager(this);
         this.validations = new ResourceValidationStateManager(this);
-
-        this.client.refresh();
     }
 
     /** Return data for api request */
