@@ -9,16 +9,17 @@ export default class CategoryRessourceManager extends BaseManager {
 
     /** The category this manager belongs to */
     public category: Category;
-    
-    /** Resources cache from the category */
-    public cache: Collection<string, Resource>
 
     constructor(category: Category) {
         super(category.client);
         this.category = category;
-        this.cache = new Collection();
+    }
 
-        this.refresh();
+    /** Resources cache from the category */
+    get cache(): Collection<string, Resource> {
+        return this.client.resources.cache.filter(r =>
+            r.categories.cache.has(this.category.id)
+        );
     }
 
     public getValidateResources() {
@@ -30,15 +31,5 @@ export default class CategoryRessourceManager extends BaseManager {
             }
         })
         return finalCache;
-    }
-
-    /** Refresh this cache */
-    public refresh() {
-        for(const r of this.category.data.resources) {
-            const resource = this.client.resources.cache.get(r.id);
-            if(resource) {
-                this.cache.set(resource.id, resource);
-            }
-        }
     }
 }

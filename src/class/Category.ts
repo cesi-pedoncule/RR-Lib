@@ -46,14 +46,6 @@ export default class Category extends Base {
         return id ? this.client.users.cache.get(id) ?? null : null;
     }
 
-    public _removeResource(resourceId: string) {
-        this.resources.cache.delete(resourceId);
-    }
-
-    public _addResource(resource: Resource) {
-        this.resources.cache.set(resource.id, resource);
-    }
-
     public _patch(data: APICategoryData) {
         this.data = data;
         this.name = data.name;
