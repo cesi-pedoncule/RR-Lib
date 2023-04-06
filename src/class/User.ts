@@ -12,9 +12,6 @@ export default class User extends Base {
     /** API data */
     public data: APIUserData;
 
-    /** User's email */
-    public email: string;
-
     /** User's roles */
     public roles: APIUserRole[];
 
@@ -37,7 +34,6 @@ export default class User extends Base {
         super(client, data.id, "/users");
 
         this.data = data;
-        this.email = data.email;
         this.roles = data.roles;
         this.name = data.name;
         this.firstname = data.firstname;
@@ -49,7 +45,6 @@ export default class User extends Base {
 
     public _patch(data: APIUserData) {
         this.data = data;
-        this.email = data.email;
         this.roles = data.roles;
         this.name = data.name;
         this.firstname = data.firstname;
@@ -68,7 +63,6 @@ export default class User extends Base {
     public toJSON() {
         return {
             id: this.id,
-            email: this.email,
             name: this.name,
             firstname: this.firstname,
         }

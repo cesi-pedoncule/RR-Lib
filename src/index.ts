@@ -37,6 +37,7 @@ export { default as Category } from "./class/Category";
 export { default as Comment } from "./class/Comment";
 export { default as Resource } from "./class/Resource";
 export { default as User } from "./class/User";
+export { default as UserAuthenticated } from "./class/UserAuthenticated";
 export { default as UserLike } from "./class/UserLike";
 export { default as ValidationState } from "./class/ValidationState";
 

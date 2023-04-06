@@ -89,7 +89,6 @@ export interface APIResourceUserLikeData {
 
 export interface APIUserData {
     id: string;
-    email: string;
     roles: APIUserRole[];
     name: string;
     firstname: string;
@@ -102,7 +101,12 @@ export interface APIUserData {
     userFollows: Partial<APIUserFollowData>[];
     userFollowers: Partial<APIUserFollowData>[];
 }
+
 export type APIBaseUserData = Omit<APIUserData, "resources" | "resourceLikes" | "userFollows" | "userFollowers">;
+
+export interface APIUserAuthenticatedData extends APIUserData {
+    email: string;
+}
 
 export interface APIValidationStateData {
     id: string;
