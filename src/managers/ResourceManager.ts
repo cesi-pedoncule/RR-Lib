@@ -71,21 +71,17 @@ export default class ResourceManager extends BaseManager {
         const data = builder.toJSON();
         const resourceData: APIResourceData =
             await this.client.rest.postRequest('/resources', data);
-        let resource: Resource;
+        let finalResourceData = resourceData;
         
         if(builder.attachments.length > 0) {
             for(const a of builder.attachments) {
                 a.setRessource(resourceData);
                 await this.client.rest.postAttachmentResource(a);
             }
-            const data: APIResourceData =
+            finalResourceData =
                 await this.client.rest.getRequest(`/resources/${resourceData.id}`);
-            resource = new Resource(this.client, data);
         }
-        else {
-            resource = new Resource(this.client, resourceData);
-        }
-        return this._add(resourceData);
+        return this._add(finalResourceData);
     }
 
     /** Edit an existing resource */
