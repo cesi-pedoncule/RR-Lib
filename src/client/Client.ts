@@ -67,9 +67,6 @@ export default class Client {
 
     /** Refresh managers */
     public refresh() {
-        this.users.cache.each(u => u.refresh());
-        this.categories.cache.each(c => c.refresh());
         this.resources.cache.each(r => r.refresh());
-        this.validations.cache.each(v => v.refresh());
     }
 }

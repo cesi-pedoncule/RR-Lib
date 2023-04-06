@@ -8,26 +8,17 @@ export default class ResourceValidationStateManager extends BaseManager {
 
     /** The resource this manager belongs to */
     public resource: Resource;
-
-    /** Validation state cache for this resource */
-    public cache: Collection<string, ValidationState>;
     
     constructor(resource: Resource) {
         super(resource.client);
         this.resource = resource;
-        this.cache = new Collection();
-
-        this.refresh();
     }
 
-    /** Refresh this cache */
-    public refresh() {
-        for(const c of this.resource.data.validationStates) {
-            const validationState = this.client.validations.cache.get(c.id);
-            if(validationState) {
-                this.cache.set(validationState.id, validationState);
-            }
-        }
+    /** Validation state cache for this resource */
+    get cache(): Collection<string, ValidationState> {
+        return this.client.validations.cache.filter(v => 
+            v.resource?.id === this.resource.id
+        );
     }
 
     /** Get last validation state */
@@ -43,16 +34,12 @@ export default class ResourceValidationStateManager extends BaseManager {
     }
 
     /** Create a new validation state for this resource */
-    public async create(validation: ValidationStateBuilder) {
-        const data = await this.client.validations.create(validation.setResource(this.resource));
-        this.cache.set(data.id, data);
-        return this.resource;
+    public create(validation: ValidationStateBuilder) {
+        return this.client.validations.create(validation.setResource(this.resource));
     }
 
     /** Delete an existing validation state for this resource */
-    public async update(validation: ValidationState) {
-        const data = await this.client.validations.update(validation);
-        this.cache.set(data.id, data);
-        return this.resource;
+    public update(validation: ValidationState) {
+        return this.client.validations.update(validation);
     }
 }
