@@ -1,5 +1,5 @@
-import { APIUserData } from "../@types";
-import User from "../class/User";
+import { APIUserAuthenticatedData } from "../@types";
+import UserAuthenticated from "../class/UserAuthenticated";
 import Client from "./Client";
 
 export interface LoginResponse {
@@ -19,7 +19,7 @@ export default class Auth {
      * User currently logged in or null if no one
      * has logged in with their account
      */
-    public me: User | null;
+    public me: UserAuthenticated | null;
     
     /** Token of user connected */
     public token: string | null;
@@ -52,8 +52,8 @@ export default class Auth {
 
     /** Fetch current user from API */
     public async fetchCurrentUser() {
-        const data: APIUserData = await this.client.rest.getRequest("/users/me", true);
-        this.me = new User(this.client, data);
+        const data: APIUserAuthenticatedData = await this.client.rest.getRequest("/users/me", true);
+        this.me = new UserAuthenticated(this.client, data);
         return this.me;
     }
 
