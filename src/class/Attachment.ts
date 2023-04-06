@@ -22,7 +22,7 @@ export default class Attachment extends Base {
     /** Resource of this attachment */
     public resource: Resource;
 
-    constructor(client: Client, resource: Resource, user: User | null, data: APIResourceAttachmentData) {
+    constructor(client: Client, resource: Resource, data: APIResourceAttachmentData) {
         super(client, data.id, "/attachments");
 
         this.fileUrl = data.fileUrl;
@@ -31,8 +31,8 @@ export default class Attachment extends Base {
         this.createdAt = new Date(data.createdAt);
         this.data = data;
 
-        this.user = user;
         this.resource = resource;
+        this.user = resource.user;
     }
 
     public _patch(data: APIResourceAttachmentData) {

@@ -23,14 +23,14 @@ export default class ResourceAttachmentManager extends BaseManager {
 
     public refresh() {
         for(const a of this.resource.data.attachments) {
-            this.cache.set(a.id, new Attachment(this.client, this.resource, this.resource.user, a));
+            this.cache.set(a.id, new Attachment(this.client, this.resource, a));
         }
     }
 
     /** Upload a new attachment for this resource */
     public async create(data: AttachmentBuilder) {
         const attachData = await this.client.rest.postAttachmentResource(data);
-        const attachment = new Attachment(this.client, this.resource, this.client.auth.me, attachData);
+        const attachment = new Attachment(this.client, this.resource, attachData);
         this.cache.set(attachment.id, attachment);
         return this.resource;
     }
