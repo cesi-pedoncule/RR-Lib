@@ -58,8 +58,8 @@ export default class Client {
     public async fetch() {
         await this.users.fetchAll();
         await this.categories.fetchAll();
-        await this.resources.fetchAll();
         await this.validations.fetchAll();
+        await this.resources.fetchAll();
 
         // Refresh managers
         this.refresh();
