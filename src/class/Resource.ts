@@ -65,11 +65,14 @@ export default class Resource extends Base {
 
     /** @deprecated */
     get user() {
-        return this.getCreator();
+        console.warn("<Resource>.user is deprecated. Please use <Resource>.creator instead");
+        const id = this.data.user?.id;
+        return this.getCreator(id);
     }
 
     get creator() {
-        return this.getCreator();
+        const id = this.data.user?.id;
+        return this.getCreator(id);
     }
 
     private getCreator(id?: string | null) {
