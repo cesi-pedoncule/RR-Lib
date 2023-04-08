@@ -78,6 +78,7 @@ export default class ResourceManager extends BaseManager {
             finalResourceData =
                 await this.client.rest.getRequest(`/resources/${resourceData.id}`);
         }
+        await this.client.validations.fetch(finalResourceData.validationStates[0].id);
         return this._add(finalResourceData);
     }
 
@@ -86,6 +87,7 @@ export default class ResourceManager extends BaseManager {
         const data = resource.toJSON();
         const resourceData: APIResourceData =
             await this.client.rest.putRequest(`/resources/${resource.id}`, data);
+        await this.client.validations.fetchAll();
         return this._add(resourceData);
     }
 

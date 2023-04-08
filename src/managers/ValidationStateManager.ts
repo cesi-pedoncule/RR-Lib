@@ -18,12 +18,26 @@ export default class ValidationStateManager extends BaseManager {
         this.cache = new Collection();
     }
 
+    public _add(data: APIValidationStateData) {
+        const existing = this.cache.get(data.id);
+        if(existing) {
+            existing._patch(data);
+            return existing;
+        }
+        const validation = new ValidationState(this.client, data);
+        this.cache.set(validation.id, validation);
+        return validation;
+    }
+
+    public _remove(id: string) {
+        this.cache.delete(id);
+    }
+
     /** Fetch all existing validations state from the api */
     public async fetchAll() {
         const data: APIValidationStateData[] = await this.client.rest.getRequest("/validation_states");
         for(const v of data) {
-            const validation = new ValidationState(this.client, v);
-            this.cache.set(validation.id, validation);
+            this._add(v);
         }
         return this.cache;
     }
@@ -32,9 +46,7 @@ export default class ValidationStateManager extends BaseManager {
     public async fetch(id: string) {
         const data: APIValidationStateData | null = await this.client.rest.getRequest(`/validation_states/${id}`);
         if(data) {
-            const vs = new ValidationState(this.client, data);
-            this.cache.set(vs.id, vs);
-            return vs;
+            return this._add(data);
         }
         return null;
     }
@@ -43,17 +55,13 @@ export default class ValidationStateManager extends BaseManager {
     public async create(validationBuilder: ValidationStateBuilder) {
         const json = validationBuilder.toJSON();
         const data: APIValidationStateData = await this.client.rest.postRequest("/validation_states", json, true);
-        const vs = new ValidationState(this.client, data);
-        this.cache.set(vs.id, vs);
-        return vs;
+        return this._add(data);
     }
 
     /** Update one validation */
     public async update(validation: ValidationState) {
         const json = validation.toJSON();
         const data: APIValidationStateData = await this.client.rest.putRequest(`/validation_states/${json.id}`, json);
-        const vs = new ValidationState(this.client, data);
-        this.cache.set(vs.id, vs);
-        return vs;
+        return this._add(data);
     }
 }
