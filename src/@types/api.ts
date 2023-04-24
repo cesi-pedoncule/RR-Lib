@@ -5,6 +5,12 @@ export enum APIValidationState {
     Rejected = "rejected"
 }
 
+export enum APIValidationStateCreate {
+    Pending = "/states/1",
+    Validated = "/states/2",
+    Rejected = "/states/3"
+}
+
 export enum APIUserRole {
     User = "ROLE_USER",
     Admin = "ROLE_ADMIN",

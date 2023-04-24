@@ -1,9 +1,9 @@
 import User from "../class/User";
-import { APIValidationState } from "../@types";
+import { APIValidationStateCreate } from "../@types";
 import Resource from "../class/Resource";
 
 export interface ValidationStateDataBuilder {
-    state: APIValidationState;
+    state: APIValidationStateCreate;
     moderator?: User;
     resource?: Resource;
 }
@@ -11,17 +11,17 @@ export interface ValidationStateDataBuilder {
 /** Represents a valid state */
 export default class ValidationStateBuilder implements ValidationStateDataBuilder {
     
-    public state: APIValidationState;
+    public state: APIValidationStateCreate;
     public moderator?: User;
     public resource?: Resource;
 
     constructor(data?: Partial<ValidationStateDataBuilder>) {
-        this.state = data?.state ?? APIValidationState.Pending;
+        this.state = data?.state ?? APIValidationStateCreate.Pending;
         this.moderator = data?.moderator!;
         this.resource = data?.resource
     }
 
-    public setState(state: APIValidationState) {
+    public setState(state: APIValidationStateCreate) {
         this.state = state;
         return this;
     }
