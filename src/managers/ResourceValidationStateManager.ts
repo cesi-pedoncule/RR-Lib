@@ -37,9 +37,4 @@ export default class ResourceValidationStateManager extends BaseManager {
     public create(validation: ValidationStateBuilder) {
         return this.client.validations.create(validation.setResource(this.resource));
     }
-
-    /** Delete an existing validation state for this resource */
-    public update(validation: ValidationState) {
-        return this.client.validations.update(validation);
-    }
 }

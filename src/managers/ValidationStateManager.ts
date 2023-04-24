@@ -57,11 +57,4 @@ export default class ValidationStateManager extends BaseManager {
         const data: APIValidationStateData = await this.client.rest.postRequest("/validation_states", json, true);
         return this._add(data);
     }
-
-    /** Update one validation */
-    public async update(validation: ValidationState) {
-        const json = validation.toJSON();
-        const data: APIValidationStateData = await this.client.rest.putRequest(`/validation_states/${json.id}`, json);
-        return this._add(data);
-    }
 }
