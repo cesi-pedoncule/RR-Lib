@@ -1,11 +1,9 @@
-import User from "./User";
 import Base from "./Base";
 import Client from "../client/Client";
 import {
     APIValidationState,
     APIValidationStateData
 } from "../@types";
-import Resource from "./Resource";
 
 /** Represents an validation state for a resource */
 export default class ValidationState extends Base {
