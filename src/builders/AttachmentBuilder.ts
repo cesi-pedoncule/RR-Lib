@@ -1,12 +1,7 @@
-import Resource from "../class/Resource";
 import {
-    APIResourceData,
-    DocumentPickerResult
+    AttachmentDataFile,
+    ResourceData
 } from "../@types";
-
-export type ResourceData = Resource | APIResourceData;
-
-export type AttachmentDataFile = File | DocumentPickerResult;
 
 export interface AttachmentDataBuilder {
     file?: AttachmentDataFile;
