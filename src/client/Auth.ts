@@ -96,7 +96,6 @@ export default class Auth {
      * without login again
      */
     public async refresh() {
-        this.checkAuth();
         const data: LoginResponse = await this.client.rest.postRequest("/token/refresh", { refresh_token: this.refresh_token }, false, 200);
         const { token, refresh_token } = data;
 
