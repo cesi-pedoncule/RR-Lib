@@ -73,6 +73,7 @@ export default class User extends Base {
         return {
             id: this.id,
             name: this.name,
+            roles: this.roles,
             firstname: this.firstname,
         }
     }
