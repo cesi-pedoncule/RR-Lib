@@ -30,6 +30,7 @@ export default class UserAuthenticated extends User {
         return {
             id: this.id,
             name: this.name,
+            roles: this.roles,
             email: this.email,
             firstname: this.firstname,
         }
