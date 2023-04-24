@@ -7,7 +7,9 @@ export enum APIValidationState {
 
 export enum APIUserRole {
     User = "ROLE_USER",
-    Admin = "ROLE_ADMIN"
+    Admin = "ROLE_ADMIN",
+    Moderator = "ROLE_MODERATOR",
+    SuperAdmin = "ROLE_SUPER_ADMIN",
 }
 
 // API data interfaces

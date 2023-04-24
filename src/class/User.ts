@@ -43,6 +43,20 @@ export default class User extends Base {
         this.resources = new UserResourceManager(this);
     }
 
+    get isSuperAdmin() {
+        return this.roles.includes(APIUserRole.SuperAdmin);
+    }
+
+    get isAdmin() {
+        if(this.isSuperAdmin) return this.isSuperAdmin;
+        return this.roles.includes(APIUserRole.Admin);
+    }
+
+    get isModerator() {
+        if(this.isAdmin) return this.isAdmin;
+        return this.roles.includes(APIUserRole.Moderator);
+    }
+
     public _patch(data: APIUserData) {
         this.data = data;
         this.roles = data.roles;
