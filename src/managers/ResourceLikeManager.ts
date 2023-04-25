@@ -5,6 +5,7 @@ import UserLike from "../class/UserLike";
 import BaseManager from "./BaseManager";
 import UserLikeBuilder from "../builders/UserLikeBuilder";
 import { APIUserLikeData } from "../@types";
+import User from "../class/User";
 
 export default class ResourceLikeManager extends BaseManager {
 
@@ -39,11 +40,15 @@ export default class ResourceLikeManager extends BaseManager {
         this.cache.delete(id);
     }
 
+    /** Check if given user has like this resource */
+    public getUserLike(user: User) {
+        return this.cache.find(l => l.userId === user.id) ?? null;
+    }
+
     /** Check if authenticated user has like this resource */
     public getMeLike() {
         if(this.client.auth.me) {
-            const me = this.cache.find(l => l.userId === this.client.auth.me?.id);
-            return me ?? null;
+            return this.getUserLike(this.client.auth.me);
         }
         return null;
     }

@@ -1,6 +1,6 @@
 {
   "name": "rr-apilib",
-  "version": "0.9.3-alpha",
+  "version": "0.9.4-alpha",
   "description": "Library for interact with RR-API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

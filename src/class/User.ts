@@ -1,4 +1,7 @@
+import { Collection } from "@discordjs/collection";
+
 import Base from "./Base";
+import Resource from "./Resource";
 import Client from "../client/Client";
 import UserResourceManager from "../managers/UserResourceManager";
 import {
@@ -55,6 +58,11 @@ export default class User extends Base {
     get isModerator() {
         if(this.isAdmin) return this.isAdmin;
         return this.roles.includes(APIUserRole.Moderator);
+    }
+
+    /* Get user Resource collection whos has liked */
+    get likedResources(): Collection<string, Resource> {
+        return this.client.resources.cache.filter(r => r.likes.getUserLike(this) !== null);
     }
 
     public _patch(data: APIUserData) {
