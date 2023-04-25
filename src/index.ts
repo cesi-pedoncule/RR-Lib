@@ -17,7 +17,10 @@ export { default as ResourceUserLikeManager } from "./managers/ResourceLikeManag
 export { default as ResourceValidationStateManager } from "./managers/ResourceValidationStateManager";
 
 export { default as UserManager } from "./managers/UserManager";
+export { default as UserFollowersManager } from "./managers/UserFollowersManager";
 export { default as UserResourceManager } from "./managers/UserResourceManager";
+
+export { default as UserFollowManager } from "./managers/UserFollowManager";
 
 export { default as ValidationStateManager } from "./managers/ValidationStateManager";
 
@@ -28,6 +31,7 @@ export { default as CommentBuilder, CommentDataBuilder } from "./builders/Commen
 export { default as ResourceBuilder, ResourceDataBuilder } from "./builders/ResourceBuilder";
 export { default as UserBuilder, UserDataBuilder } from "./builders/UserBuilder";
 export { default as UserLikeBuilder, UserLikeDataBuilder } from "./builders/UserLikeBuilder";
+export { default as UserFollowBuilder, UserFollowDataBuilder } from "./builders/UserFollowBuilder";
 export { default as ValidationStateBuilder, ValidationStateDataBuilder } from "./builders/ValidationStateBuilder";
 
 // Class
@@ -39,6 +43,7 @@ export { default as Resource } from "./class/Resource";
 export { default as User } from "./class/User";
 export { default as UserAuthenticated } from "./class/UserAuthenticated";
 export { default as UserLike } from "./class/UserLike";
+export { default as UserFollow } from "./class/UserFollow";
 export { default as ValidationState } from "./class/ValidationState";
 
 // Types

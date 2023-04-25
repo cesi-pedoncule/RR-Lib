@@ -6,6 +6,7 @@ import REST from "./REST";
 import UserManager from "../managers/UserManager";
 import CategoryManager from "../managers/CategoryManager";
 import ResourceManager from "../managers/ResourceManager";
+import UserFollowManager from "../managers/UserFollowManager";
 import ValidationStateManager from "../managers/ValidationStateManager";
 
 /** Client configuration object */
@@ -28,6 +29,9 @@ export default class Client {
 
     /** Users manager for this client */
     public users: UserManager;
+
+    /** Users manager for this client */
+    public userFollows: UserFollowManager;
     
     /** Categories manager for this client */
     public categories: CategoryManager;
@@ -46,6 +50,7 @@ export default class Client {
         this.users = new UserManager(this);
         this.categories = new CategoryManager(this);
         this.validations = new ValidationStateManager(this);
+        this.userFollows = new UserFollowManager(this);
         this.resources = new ResourceManager(this);
     }
 
@@ -57,12 +62,17 @@ export default class Client {
     /** Hydrate all data in managers */
     public async fetch() {
         await this.users.fetchAll();
+        await this.userFollows.fetchAll();
         await this.categories.fetchAll();
         await this.validations.fetchAll();
         await this.resources.fetchAll();
 
         // Refresh managers
         this.refresh();
+    }
+
+    get me() {
+        return this.auth.me;
     }
 
     /** Refresh managers */

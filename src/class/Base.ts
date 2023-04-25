@@ -21,4 +21,8 @@ export default class Base {
     public getIri() {
         return `${this.path}/${this.id}`;
     }
+
+    public getIdByIri(iri: string) {
+        return iri.split('/').pop()!;
+    }
 }

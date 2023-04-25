@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "docgen": "typedoc src/index.ts",
-    "docgen:local": "npm i typedoc && npm run docgen && npm uninstall typedoc"
+    "docgen:local": "npm i typedoc && npm run docgen && npm rm typedoc"
   },
   "keywords": [],
   "author": "Hugo B",

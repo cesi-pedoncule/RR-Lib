@@ -3,7 +3,10 @@ import { Collection } from "@discordjs/collection";
 import Base from "./Base";
 import Resource from "./Resource";
 import Client from "../client/Client";
+import UserFollow from "./UserFollow";
+
 import UserResourceManager from "../managers/UserResourceManager";
+import UserFollowersManager from "../managers/UserFollowersManager";
 import {
     APIUserData,
     APIUserRole
@@ -33,6 +36,9 @@ export default class User extends Base {
     /** Resources manager for this user */
     public resources: UserResourceManager;
 
+    /** Followers manager for this user */
+    public followers: UserFollowersManager;
+
     constructor(client: Client, data: APIUserData) {
         super(client, data.id, "/users");
 
@@ -44,6 +50,7 @@ export default class User extends Base {
         this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
 
         this.resources = new UserResourceManager(this);
+        this.followers = new UserFollowersManager(this);
     }
 
     get isSuperAdmin() {
@@ -63,6 +70,30 @@ export default class User extends Base {
     /* Get user Resource collection whos has liked */
     get likedResources(): Collection<string, Resource> {
         return this.client.resources.cache.filter(r => r.likes.getUserLike(this) !== null);
+    }
+
+    get myFollow() {
+        const me = this.client.auth.me;
+        return this.followers.cache.find(f => 
+            f.user?.id === me?.id && f.follower?.id === this.id
+        ) ?? null;
+    }
+
+    /* Get user followers */
+    get follows() {
+        return this.client.userFollows.cache.filter(f => f.user?.id === this.id);
+    }
+
+    /* Follow this user */
+    public follow(): Promise<UserFollow> {
+        this.client.auth.checkAuth();
+        return this.followers.add(this.client.me!);
+    }
+
+    /* Unfollow this user */
+    public unfollow(): Promise<UserFollow | null> {
+        this.client.auth.checkAuth();
+        return this.followers.remove(this.client.me!);
     }
 
     public _patch(data: APIUserData) {
