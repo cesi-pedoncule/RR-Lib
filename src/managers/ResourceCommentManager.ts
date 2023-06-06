@@ -1,9 +1,9 @@
 import { Collection } from "@discordjs/collection";
-import CommentBuilder from "../builders/CommentBuilder";
 
 import Comment from "../class/Comment";
-import Resource from "../class/Resource";
 import BaseManager from "./BaseManager";
+import Resource from "../class/Resource";
+import CommentBuilder from "../builders/CommentBuilder";
 
 import {
     APICommentData,

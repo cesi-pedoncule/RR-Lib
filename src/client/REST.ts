@@ -2,9 +2,10 @@ import axios, {
     AxiosInstance,
     CreateAxiosDefaults
 } from 'axios';
+
+import Client from './Client';
 import { APIResourceAttachmentData } from '../@types';
 import AttachmentBuilder from '../builders/AttachmentBuilder';
-import Client from './Client';
 
 export enum RequestMethod {
     Get = "GET",

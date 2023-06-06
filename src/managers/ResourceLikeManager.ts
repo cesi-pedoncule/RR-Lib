@@ -1,11 +1,12 @@
 import { Collection } from "@discordjs/collection";
 
+import User from "../class/User";
+import BaseManager from "./BaseManager";
 import Resource from "../class/Resource";
 import UserLike from "../class/UserLike";
-import BaseManager from "./BaseManager";
-import UserLikeBuilder from "../builders/UserLikeBuilder";
 import { APIUserLikeData } from "../@types";
-import User from "../class/User";
+import UserLikeBuilder from "../builders/UserLikeBuilder";
+
 
 export default class ResourceLikeManager extends BaseManager {
 

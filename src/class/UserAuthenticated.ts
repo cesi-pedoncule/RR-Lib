@@ -1,7 +1,7 @@
-import { APIUserAuthenticatedData } from "../@types";
-import Client from "../client/Client";
-import UserResourceManager from "../managers/UserResourceManager";
 import User from "./User";
+import Client from "../client/Client";
+import { APIUserAuthenticatedData } from "../@types";
+import UserResourceManager from "../managers/UserResourceManager";
 
 /** Represents an authenticated user */
 export default class UserAuthenticated extends User {

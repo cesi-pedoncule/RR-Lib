@@ -1,8 +1,8 @@
 import { Collection } from "@discordjs/collection";
 
+import BaseManager from "./BaseManager";
 import Category from "../class/Category";
 import Resource from "../class/Resource";
-import BaseManager from "./BaseManager";
 import { APIValidationState } from "../@types";
 
 export default class CategoryRessourceManager extends BaseManager {

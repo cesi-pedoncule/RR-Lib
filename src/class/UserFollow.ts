@@ -1,7 +1,7 @@
 import Base from "./Base";
+import User from "./User";
 import Client from "../client/Client";
 import { APIUserFollowData } from "../@types";
-import User from "./User";
 
 /** Represents an follow from a user to an another user */
 export default class UserFollow extends Base {

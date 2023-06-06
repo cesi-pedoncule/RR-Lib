@@ -1,6 +1,7 @@
+import { Collection } from "@discordjs/collection";
+
 import Resource from "../class/Resource";
 import BaseManager from "./BaseManager";
-import { Collection } from "@discordjs/collection";
 import ValidationState from "../class/ValidationState";
 import ValidationStateBuilder from "../builders/ValidationStateBuilder";
 
