@@ -1,8 +1,8 @@
 import Base from "./Base";
 import Client from "../client/Client";
 import {
-    APIValidationState,
-    APIValidationStateData
+    APIValidationStateData,
+    APIValidationStateType
 } from "../@types";
 
 /** Represents an validation state for a resource */
@@ -12,7 +12,7 @@ export default class ValidationState extends Base {
     public data: APIValidationStateData;
 
     /** Value of the state */
-    public state: APIValidationState;
+    public state: APIValidationStateType;
     
     /** Last update */
     public updatedAt: Date;
