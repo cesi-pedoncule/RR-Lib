@@ -1,8 +1,8 @@
 import { Collection } from "@discordjs/collection";
 
+import BaseManager from "./BaseManager";
 import Category from "../class/Category";
 import Resource from "../class/Resource";
-import BaseManager from "./BaseManager";
 import { APIResourceData } from "../@types";
 
 export default class ResourceCategoryManager extends BaseManager {
@@ -17,12 +17,7 @@ export default class ResourceCategoryManager extends BaseManager {
         super(resource.client);
         this.resource = resource;
         this.cache = new Collection();
-        
-        this.refresh();
-    }
 
-    /** Refresh this cache */
-    public refresh() {
         for(const c of this.resource.data.categories) {
             const category = this.client.categories.cache.get(c.id);
             if(category) {

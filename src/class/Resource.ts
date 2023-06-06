@@ -77,11 +77,6 @@ export default class Resource extends Base {
         return this.likes.getMeLike() ? true : false;
     }
 
-    /** Refresh all resource managers */
-    public refresh() {
-        this.categories.refresh();
-    }
-
     /* Current user like this resource */
     public like() {
         const me = this.client.auth.me;

@@ -18,10 +18,6 @@ export default class ResourceAttachmentManager extends BaseManager {
         this.resource = resource;
         this.cache = new Collection();
 
-        this.refresh();
-    }
-
-    public refresh() {
         for(const a of this.resource.data.attachments) {
             this.cache.set(a.id, new Attachment(this.client, this.resource, a));
         }

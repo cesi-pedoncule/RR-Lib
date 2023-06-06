@@ -66,17 +66,9 @@ export default class Client {
         await this.categories.fetchAll();
         await this.validations.fetchAll();
         await this.resources.fetchAll();
-
-        // Refresh managers
-        this.refresh();
     }
 
     get me() {
         return this.auth.me;
-    }
-
-    /** Refresh managers */
-    public refresh() {
-        this.resources.cache.each(r => r.refresh());
     }
 }
