@@ -1,6 +1,6 @@
+import Client from "./Client";
 import { APIUserAuthenticatedData } from "../@types";
 import UserAuthenticated from "../class/UserAuthenticated";
-import Client from "./Client";
 
 export interface LoginResponse {
     token: string;
@@ -27,7 +27,7 @@ export default class Auth {
     /** Refresh token of user connected */
     public refresh_token: string | null;
 
-    private refreshInterval: NodeJS.Timer | null;
+    private _refreshInterval: NodeJS.Timer | null;
 
     constructor(client: Client) {
         this.client = client;
@@ -36,18 +36,18 @@ export default class Auth {
         this.token = null;
         this.refresh_token = null;
 
-        this.refreshInterval = null;
+        this._refreshInterval = null;
     }
 
     private startRefreshInterval() {
-        this.refreshInterval = setInterval(() => this.refresh(), 36e5);
+        this._refreshInterval = setInterval(() => this.refresh(), 36e5);
     }
 
     private clearRefreshInterval() {
-        if(this.refreshInterval) {
-            clearInterval(this.refreshInterval);
+        if(this._refreshInterval) {
+            clearInterval(this._refreshInterval);
         }
-        this.refreshInterval = null;
+        this._refreshInterval = null;
     }
 
     /** Fetch current user from API */
@@ -78,7 +78,6 @@ export default class Auth {
         this.startRefreshInterval();
 
         await this.fetchCurrentUser();
-        this.client.refresh();
         return data;
     }
 
@@ -108,7 +107,6 @@ export default class Auth {
         this.startRefreshInterval();
 
         await this.fetchCurrentUser();
-        this.client.refresh();
         return data;
     }
 }
