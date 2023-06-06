@@ -5,6 +5,8 @@ export enum APIValidationState {
     Rejected = "rejected"
 }
 
+export type APIValidationStateType = `${APIValidationState}`;
+
 export enum APIValidationStateCreate {
     Pending = "/states/1",
     Validated = "/states/2",
@@ -17,6 +19,8 @@ export enum APIUserRole {
     Moderator = "ROLE_MODERATOR",
     SuperAdmin = "ROLE_SUPER_ADMIN",
 }
+
+export type APIUserRoleType = `${APIUserRole}`;
 
 // API data interfaces
 export interface APIAttachmentData {
@@ -97,7 +101,7 @@ export interface APIResourceUserLikeData {
 
 export interface APIUserData {
     id: string;
-    roles: APIUserRole[];
+    roles: APIUserRoleType[];
     name: string;
     firstname: string;
     createdAt: string;
@@ -131,7 +135,7 @@ export interface APIResourceValidationStateData {
 
 export interface APIStateData {
     id: number;
-    label: APIValidationState;
+    label: APIValidationStateType;
 }
 
 // API error
