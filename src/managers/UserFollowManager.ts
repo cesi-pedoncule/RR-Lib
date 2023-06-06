@@ -42,7 +42,10 @@ export default class UserFollowManager extends BaseManager {
     /** Create a new user follow */
     public async create(builder: UserFollowBuilder) {
         this.client.auth.checkAuth();
-        builder.setUser(this.client.auth.me!);
+        if(this.client.me?.id === builder.follower?.id) {
+            return null;
+        }
+        builder.setUser(this.client.me!);
         const data = builder.toJSON();
         const followData: APIUserFollowData = await this.client.rest.postRequest('/user_follows', data);
         const follow = new UserFollow(this.client, followData);

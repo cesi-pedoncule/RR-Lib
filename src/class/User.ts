@@ -9,7 +9,8 @@ import UserResourceManager from "../managers/UserResourceManager";
 import UserFollowersManager from "../managers/UserFollowersManager";
 import {
     APIUserData,
-    APIUserRole
+    APIUserRole,
+    APIUserRoleType
 } from "../@types";
 
 /** Represents an user */
@@ -19,7 +20,7 @@ export default class User extends Base {
     public data: APIUserData;
 
     /** User's roles */
-    public roles: APIUserRole[];
+    public roles: APIUserRoleType[];
 
     /** User's name */
     public name: string;
@@ -73,7 +74,7 @@ export default class User extends Base {
     }
 
     get myFollow() {
-        const me = this.client.auth.me;
+        const me = this.client.me;
         return this.followers.cache.find(f => 
             f.user?.id === me?.id && f.follower?.id === this.id
         ) ?? null;
@@ -85,7 +86,7 @@ export default class User extends Base {
     }
 
     /* Follow this user */
-    public follow(): Promise<UserFollow> {
+    public follow(): Promise<UserFollow | null> {
         this.client.auth.checkAuth();
         return this.followers.add(this.client.me!);
     }

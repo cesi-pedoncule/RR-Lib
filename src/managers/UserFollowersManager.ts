@@ -20,7 +20,7 @@ export default class UserFollowersManager extends BaseManager {
     }
 
     /** Add a new user follow */
-    public async add(follower: User): Promise<UserFollow> {
+    public async add(follower: User): Promise<UserFollow | null> {
         const builder = new UserFollowBuilder();
         builder.setUser(this.user).setFollower(follower);
         return this.client.userFollows.create(builder);
