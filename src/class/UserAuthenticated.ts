@@ -25,6 +25,12 @@ export default class UserAuthenticated extends User {
         this.resources = new UserResourceManager(this);
     }
 
+    /** Change the current password for this user */
+    public async changePassword(oldPassword: string, newPassword: string) {
+        await this.client.rest.putRequest("/users/me/reset_password", { oldPassword, newPassword });
+        this.client.auth.logout();
+    }
+
     /** Return data for api request */
     public toJSON() {
         return {
