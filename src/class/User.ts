@@ -76,25 +76,29 @@ export default class User extends Base {
     get myFollow() {
         const me = this.client.me;
         return this.followers.cache.find(f => 
-            f.user?.id === me?.id && f.follower?.id === this.id
+            f.user?.id === this.id && f.follower?.id === me?.id
         ) ?? null;
     }
 
-    /* Get user followers */
+    /* Get user follows */
     get follows() {
-        return this.client.userFollows.cache.filter(f => f.user?.id === this.id);
+        return this.client.userFollows.cache.filter(f => f.follower?.id === this.id);
     }
 
     /* Follow this user */
     public follow(): Promise<UserFollow | null> {
-        this.client.auth.checkAuth();
-        return this.followers.add(this.client.me!);
+        if(this.client.me) {
+            return this.followers.add(this.client.me);
+        }
+        return new Promise(res => res(null));
     }
 
     /* Unfollow this user */
     public unfollow(): Promise<UserFollow | null> {
-        this.client.auth.checkAuth();
-        return this.followers.remove(this.client.me!);
+        if(this.client.me) {
+            return this.followers.remove(this.client.me);
+        }
+        return new Promise(res => res(null));
     }
 
     public _patch(data: APIUserData) {

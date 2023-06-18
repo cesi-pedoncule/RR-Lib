@@ -16,17 +16,17 @@ export default class UserFollowersManager extends BaseManager {
     }
 
     get cache() {
-        return this.client.userFollows.cache.filter(f => f.follower?.id === this.user.id);
+        return this.client.userFollows.cache.filter(f => f.user?.id === this.user.id);
     }
 
-    /** Add a new user follow */
+    /** Add a new follower for this user */
     public async add(follower: User): Promise<UserFollow | null> {
         const builder = new UserFollowBuilder();
         builder.setUser(this.user).setFollower(follower);
         return this.client.userFollows.create(builder);
     }
 
-    /** Remove an existing user follow */
+    /** Remove an existing follower for this user */
     public async remove(follower: User): Promise<UserFollow | null> {
         const follow = this.cache.find(f => f.follower?.id === follower.id);
         if(follow) {
