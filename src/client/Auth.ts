@@ -112,7 +112,7 @@ export default class Auth {
 
     /** Start the password reset process by e-mail */
     public async sendResetPasswordMail(email: string) {
-        await this.client.rest.postRequest("/forgot_password", { email }, false, 204);
+        await this.client.rest.postRequest("/forgot_password/", { email }, false, 204);
     }
 
     /** Register new password with token received by e-mail */
